@@ -1,10 +1,25 @@
 package me.decentos;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class MyArrayList<T> implements List<T> {
-    private T[] array = (T[]) new Object[10];
+    private static final int DEFAULT_CAPACITY = 10;
+    private Object[] array;
     private int size;
+
+    public MyArrayList() {
+        this.array = new Object[DEFAULT_CAPACITY];
+    }
+
+    public MyArrayList(int capacity) {
+        if (capacity >= 0) {
+            this.array = new Object[capacity];
+        }
+        else {
+            throw new IllegalArgumentException("Capacity must be more than 0!");
+        }
+    }
 
     @Override
     public int size() {
@@ -19,73 +34,81 @@ public class MyArrayList<T> implements List<T> {
     @Override
     public boolean add(T t) {
         if (array.length == size) {
-            final T[] oldArray = array;
-            array = (T[]) new Object[this.size() * 2];
-            System.arraycopy(oldArray, 0, array, 0, oldArray.length);
+            resize();
         }
         array[size++] = t;
         return true;
     }
 
+    private void resize() {
+        final Object[] oldArray = array;
+        array = new Object[this.size() * 2];
+        System.arraycopy(oldArray, 0, array, 0, oldArray.length);
+    }
+
     @Override
     public void add(int index, T element) {
-        if (index > size) {
-            throw new IndexOutOfBoundsException();
-        }
+        indexCheckForAdd(index);
         if (array.length == size) {
-            final T[] oldArray = array;
-            array = (T[]) new Object[this.size() * 2];
+            final Object[] oldArray = array;
+            array = new Object[this.size() * 2];
 
             if (index != 0) {
                 System.arraycopy(oldArray, 0, array, 0, index);
             }
-            if (index != size) {
-                System.arraycopy(oldArray, index, array, index + 1, size - index);
-            }
+            System.arraycopy(oldArray, index, array, index + 1, size - index);
         }
         else {
-            if (index != size) {
-                System.arraycopy(array, index, array, index + 1, size - index);
-            }
+            System.arraycopy(array, index, array, index + 1, size - index);
         }
         array[index] = element;
         size++;
     }
 
-    private String MyToString() {
-        StringBuilder sb = new StringBuilder();
-        for (Object element : this) {
-            if (element != null) {
-                sb.append(element).append(", ");
-            }
-        }
-        return sb.toString().substring(0, sb.toString().length() - 2);
-    }
-
     @Override
     public String toString() {
-        if (this.size == 0) {
-            return super.toString();
+        return "[" + Arrays.stream(array).map(String::valueOf).limit(size).collect(Collectors.joining(", ")) + "]";
+    }
+
+    private T array(int index) {
+        return (T) array[index];
+    }
+
+    private void indexCheck(int index) {
+        if (index >= size) {
+            throw new IndexOutOfBoundsException("Index " + index + " cannot be passed to the array because size = " + size);
         }
-        else {
-            return "[" + MyToString() + "]";
+        else if (index < 0) {
+            throw new IndexOutOfBoundsException("Index must be more than 0!");
+        }
+    }
+
+    private void indexCheckForAdd(int index) {
+        if (index > size) {
+            throw new IndexOutOfBoundsException("Index " + index + " cannot be passed to the array because size = " + size);
+        }
+        else if (index < 0) {
+            throw new IndexOutOfBoundsException("Index must be more than 0!");
         }
     }
 
     @Override
     public T get(int index) {
-        return array[index];
+        indexCheck(index);
+        return array(index);
     }
 
     @Override
     public T set(int index, T element) {
+        indexCheck(index);
         array[index] = element;
         return element;
     }
 
     @Override
     public T remove(int index) {
-        final T element = array[index];
+        indexCheck(index);
+        final T element = array(index);
         if (index != this.size() - 1) {
             System.arraycopy(array, index + 1, array, index, this.size - index);
         }
@@ -107,7 +130,7 @@ public class MyArrayList<T> implements List<T> {
 
     @Override
     public Object[] toArray() {
-        final T[] newArray = (T[]) new Object[this.size()];
+        final Object[] newArray = new Object[this.size()];
         System.arraycopy(array, 0, newArray, 0, this.size());
         return newArray;
     }
@@ -140,6 +163,7 @@ public class MyArrayList<T> implements List<T> {
 
     @Override
     public ListIterator<T> listIterator(int index) {
+        indexCheck(index);
         return new MyListIterator(index);
     }
 
@@ -147,11 +171,11 @@ public class MyArrayList<T> implements List<T> {
         private int index;
         private int last = -1;
 
-        public MyListIterator() {
+        private MyListIterator() {
             this.index = 0;
         }
 
-        public MyListIterator(int index) {
+        private MyListIterator(int index) {
             this.index = index;
         }
 
@@ -166,7 +190,7 @@ public class MyArrayList<T> implements List<T> {
                 throw new NoSuchElementException();
             }
             last = index;
-            return MyArrayList.this.array[index++];
+            return (T) MyArrayList.this.array[index++];
         }
 
         @Override
@@ -203,7 +227,7 @@ public class MyArrayList<T> implements List<T> {
                 throw new NoSuchElementException();
             }
             last = --index;
-            return array[index];
+            return array(index);
         }
 
         @Override
