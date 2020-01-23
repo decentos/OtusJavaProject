@@ -50,17 +50,9 @@ public class MyArrayList<T> implements List<T> {
     public void add(int index, T element) {
         indexCheckForAdd(index);
         if (array.length == size) {
-            final Object[] oldArray = array;
-            array = new Object[this.size() * 2];
-
-            if (index != 0) {
-                System.arraycopy(oldArray, 0, array, 0, index);
-            }
-            System.arraycopy(oldArray, index, array, index + 1, size - index);
+            resize();
         }
-        else {
-            System.arraycopy(array, index, array, index + 1, size - index);
-        }
+        System.arraycopy(array, index, array, index + 1, size - index);
         array[index] = element;
         size++;
     }
@@ -70,7 +62,7 @@ public class MyArrayList<T> implements List<T> {
         return "[" + Arrays.stream(array).map(String::valueOf).limit(size).collect(Collectors.joining(", ")) + "]";
     }
 
-    private T array(int index) {
+    private T giveElementByIndex(int index) {
         return (T) array[index];
     }
 
@@ -95,7 +87,7 @@ public class MyArrayList<T> implements List<T> {
     @Override
     public T get(int index) {
         indexCheck(index);
-        return array(index);
+        return giveElementByIndex(index);
     }
 
     @Override
@@ -108,7 +100,7 @@ public class MyArrayList<T> implements List<T> {
     @Override
     public T remove(int index) {
         indexCheck(index);
-        final T element = array(index);
+        final T element = giveElementByIndex(index);
         if (index != this.size() - 1) {
             System.arraycopy(array, index + 1, array, index, this.size - index);
         }
@@ -227,7 +219,7 @@ public class MyArrayList<T> implements List<T> {
                 throw new NoSuchElementException();
             }
             last = --index;
-            return array(index);
+            return giveElementByIndex(index);
         }
 
         @Override
