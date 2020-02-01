@@ -21,11 +21,11 @@ import java.util.List;
 */
 
 /*
-1) default
-2) -XX:MaxGCPauseMillis=100000
-3) -XX:MaxGCPauseMillis=10
-4) -Xms2048m -Xmx2048m
-5) -Xms5120m -Xmx5120m
+1.1) default
+1.2) -XX:MaxGCPauseMillis=100000
+1.3) -XX:MaxGCPauseMillis=10
+2) -Xms1024m -Xmx1024m
+3) -Xms2048m -Xmx2048m
 */
 
 public class GcDemo {
@@ -34,7 +34,7 @@ public class GcDemo {
         switchOnMonitoring();
         long beginTime = System.currentTimeMillis();
 
-        int size = 5 * 1000 * 1000;
+        int size = 5_000_000;
         int loopCounter = 1000;
         MBeanServer mbs = ManagementFactory.getPlatformMBeanServer();
         ObjectName name = new ObjectName("me.decentos:type=Benchmark");

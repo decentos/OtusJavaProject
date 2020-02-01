@@ -1,5 +1,9 @@
 package me.decentos.bench;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 class Benchmark implements BenchmarkMBean {
     private final int loopCounter;
     private volatile int size = 0;
@@ -9,11 +13,15 @@ class Benchmark implements BenchmarkMBean {
     }
 
     void run() throws InterruptedException {
+        Random random = new Random();
         for (int idx = 0; idx < loopCounter; idx++) {
             int local = size;
-            Object[] array = new Object[local];
+            List<Object> list = new ArrayList<>(local);
             for (int i = 0; i < local; i++) {
-                array[ i ] = new String(new char[0]);
+                list.add(new Integer(random.nextInt()));
+//                if (i % 1000 == 0) {
+//                    list.remove(0);
+//                }
             }
             Thread.sleep(10);
         }
