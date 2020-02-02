@@ -18,6 +18,7 @@
     <modules>
         <module>hw01-maven</module>
         <module>hw02-myArrayList</module>
+        <module>hw03-garbageCollector</module>
     </modules>
 
     <properties>
