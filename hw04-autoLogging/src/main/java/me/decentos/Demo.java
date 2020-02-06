@@ -2,14 +2,10 @@ package me.decentos;
 
 public class Demo {
     public static void main(String[] args) {
-        try {
-            new Demo().action();
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        }
+        new Demo().action();
     }
 
-    public void action() throws NoSuchMethodException {
+    public void action() {
         Logging logging = ProxyIoC.createMyClass();
         logging.calculation(6);
     }
