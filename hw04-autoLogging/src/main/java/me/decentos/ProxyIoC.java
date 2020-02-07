@@ -4,6 +4,8 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ProxyIoC {
 
@@ -14,21 +16,22 @@ public class ProxyIoC {
 
     static class LoggingInvocationHandler implements InvocationHandler {
         private final Logging logging;
+        private final Map<String, Class<?>[]> logMethods = new HashMap<>();
 
         LoggingInvocationHandler(Logging logging) {
             this.logging = logging;
+
+            Method[] methods = this.logging.getClass().getMethods();
+            for (Method m : methods) {
+                if (m.getAnnotation(Log.class) != null) {
+                    logMethods.put(m.getName(), m.getParameterTypes());
+                }
+            }
         }
 
         @Override
         public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-            Class<?> annotatedClass = this.logging.getClass();
-            Method calculationMethod = annotatedClass.getMethod(method.getName(), method.getParameterTypes());
-            Log logAnnotationBeforeMethod = calculationMethod.getAnnotation(Log.class);
-
-            if (logAnnotationBeforeMethod != null) {
-                System.out.println("executed method: " + method.getName() + ", param: " + Arrays.toString(args));
-            }
-
+            logMethods.forEach((k, v) -> System.out.println("executed method: " + k + ", param: " + Arrays.toString(args)));
             return method.invoke(logging, args);
         }
     }
