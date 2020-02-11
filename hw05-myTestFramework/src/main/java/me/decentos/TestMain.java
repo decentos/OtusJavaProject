@@ -27,7 +27,7 @@ public class TestMain {
         Class classForTest;
         try {
             classForTest = Class.forName(className);
-            fillMethodCollections(classForTest);
+            fillMethod(classForTest);
 
             for (Method method : testingMethods) {
                 Object instanceOfClassForTest = getInstance(classForTest);
@@ -52,10 +52,10 @@ public class TestMain {
     private void invokeMethod(Method method, Object instanceOfClassForTest) {
         try {
             try {
-                invokeMethodsFromCollection(instanceOfClassForTest, beforeMethods);
+                invokeMethods(instanceOfClassForTest, beforeMethods);
                 method.invoke(instanceOfClassForTest);
             } finally {
-                invokeMethodsFromCollection(instanceOfClassForTest, afterMethods);
+                invokeMethods(instanceOfClassForTest, afterMethods);
             }
             System.out.printf("%s - Test '%s' - passed %n", ++count, method.getName());
             passed++;
@@ -65,13 +65,13 @@ public class TestMain {
         }
     }
 
-    private void invokeMethodsFromCollection(Object instanceOfClassForTesting, Collection<Method> methodCollection) throws IllegalAccessException, InvocationTargetException {
-        for (Method method : methodCollection) {
-            method.invoke(instanceOfClassForTesting);
+    private void invokeMethods(Object instance, Collection<Method> method) throws IllegalAccessException, InvocationTargetException {
+        for (Method m : method) {
+            m.invoke(instance);
         }
     }
 
-    private void fillMethodCollections(Class classForTest) {
+    private void fillMethod(Class classForTest) {
         for (Method method : classForTest.getDeclaredMethods()) {
             for (Annotation annotation : method.getDeclaredAnnotations()) {
 
