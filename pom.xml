@@ -20,6 +20,7 @@
         <module>hw02-myArrayList</module>
         <module>hw03-garbageCollector</module>
         <module>hw04-autoLogging</module>
+        <module>hw05-myTestFramework</module>
     </modules>
 
     <properties>
