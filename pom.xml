@@ -21,6 +21,7 @@
         <module>hw03-garbageCollector</module>
         <module>hw04-autoLogging</module>
         <module>hw05-myTestFramework</module>
+        <module>hw06-atmDemo</module>
     </modules>
 
     <properties>
