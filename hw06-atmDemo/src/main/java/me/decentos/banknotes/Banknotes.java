@@ -1,4 +1,4 @@
-package me.decentos;
+package me.decentos.banknotes;
 
 public enum Banknotes {
     TEN(10),
