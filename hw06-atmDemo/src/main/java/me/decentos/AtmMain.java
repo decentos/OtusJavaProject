@@ -18,10 +18,11 @@ public class AtmMain {
 //        atmLogic.withdraw(40_000);
 
 //        AtmLogic atmLogic2 = new AtmLogic(100_000);
-//        atmLogic.getBalanceOfAtmAndAvailableBanknotes("passForAdmin");
+//        atmLogic2.getBalanceOfAtmAndAvailableBanknotes("passForAdmin");
 //        atmLogic2.withdraw(82_000);
 //        atmLogic2.withdraw(40);
 //        atmLogic2.withdraw(40);
+//        atmLogic2.getBalanceOfAtmAndAvailableBanknotes("passForAdmin");
 //        atmLogic.getBalanceOfAtmAndAvailableBanknotes("123");
 //        atmLogic2.withdraw(30);
     }

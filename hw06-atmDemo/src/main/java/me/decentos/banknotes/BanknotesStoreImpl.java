@@ -1,58 +1,66 @@
 package me.decentos.banknotes;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class BanknotesStoreImpl implements BanknotesStore {
-    private static int tenBanknotes = 10;
-    private static int fiftyBanknotes = 10;
-    private static int hundredBanknotes = 10;
-    private static int twoHundredBanknotes = 10;
-    private static int fiveHundredBanknotes = 10;
-    private static int thousandBanknotes = 10;
-    private static int twoThousandBanknotes = 10;
-    private static int fiveThousandBanknotes = 10;
+    private static Map<Banknotes, Integer> banknotes = new HashMap<>();
+
+    public void fillAtmByBanknotes() {
+        for (int i = 0; i < 10; i++) {
+            banknotes.put(Banknotes.TEN, 10);
+            banknotes.put(Banknotes.FIFTY, 10);
+            banknotes.put(Banknotes.HUNDRED, 10);
+            banknotes.put(Banknotes.TWO_HUNDRED, 10);
+            banknotes.put(Banknotes.FIVE_HUNDRED, 10);
+            banknotes.put(Banknotes.THOUSAND, 10);
+            banknotes.put(Banknotes.TWO_THOUSAND, 10);
+            banknotes.put(Banknotes.FIVE_THOUSAND, 10);
+        }
+    }
 
     @Override
     public void receiveBanknotesForWithdrawal(int withdrawAmount) {
         List<Integer> banknotesForWithdrawal = new ArrayList<>();
         while (withdrawAmount != 0) {
-            if (withdrawAmount / Banknotes.FIVE_THOUSAND.getBanknote() > 0 && fiveThousandBanknotes > 0) {
+            if (withdrawAmount / Banknotes.FIVE_THOUSAND.getBanknote() > 0 && banknotes.get(Banknotes.FIVE_THOUSAND) > 0) {
                 withdrawAmount -= Banknotes.FIVE_THOUSAND.getBanknote();
                 minusBanknotesCount(Banknotes.FIVE_THOUSAND);
                 banknotesForWithdrawal.add(Banknotes.FIVE_THOUSAND.getBanknote());
             }
-            else if (withdrawAmount / Banknotes.TWO_THOUSAND.getBanknote() > 0 && twoThousandBanknotes > 0) {
+            else if (withdrawAmount / Banknotes.TWO_THOUSAND.getBanknote() > 0 && banknotes.get(Banknotes.TWO_THOUSAND) > 0) {
                 withdrawAmount -= Banknotes.TWO_THOUSAND.getBanknote();
                 minusBanknotesCount(Banknotes.TWO_THOUSAND);
                 banknotesForWithdrawal.add(Banknotes.TWO_THOUSAND.getBanknote());
             }
-            else if (withdrawAmount / Banknotes.THOUSAND.getBanknote() > 0 && thousandBanknotes > 0) {
+            else if (withdrawAmount / Banknotes.THOUSAND.getBanknote() > 0 && banknotes.get(Banknotes.THOUSAND) > 0) {
                 withdrawAmount -= Banknotes.THOUSAND.getBanknote();
                 minusBanknotesCount(Banknotes.THOUSAND);
                 banknotesForWithdrawal.add(Banknotes.THOUSAND.getBanknote());
             }
-            else if (withdrawAmount / Banknotes.FIVE_HUNDRED.getBanknote() > 0  && fiveHundredBanknotes > 0) {
+            else if (withdrawAmount / Banknotes.FIVE_HUNDRED.getBanknote() > 0  && banknotes.get(Banknotes.FIVE_HUNDRED) > 0) {
                 withdrawAmount -= Banknotes.FIVE_HUNDRED.getBanknote();
                 minusBanknotesCount(Banknotes.FIVE_HUNDRED);
                 banknotesForWithdrawal.add(Banknotes.FIVE_HUNDRED.getBanknote());
             }
-            else if (withdrawAmount / Banknotes.TWO_HUNDRED.getBanknote() > 0 && twoHundredBanknotes > 0) {
+            else if (withdrawAmount / Banknotes.TWO_HUNDRED.getBanknote() > 0 && banknotes.get(Banknotes.TWO_HUNDRED) > 0) {
                 withdrawAmount -= Banknotes.TWO_HUNDRED.getBanknote();
                 minusBanknotesCount(Banknotes.TWO_HUNDRED);
                 banknotesForWithdrawal.add(Banknotes.TWO_HUNDRED.getBanknote());
             }
-            else if (withdrawAmount / Banknotes.HUNDRED.getBanknote() > 0 && hundredBanknotes > 0) {
+            else if (withdrawAmount / Banknotes.HUNDRED.getBanknote() > 0 && banknotes.get(Banknotes.HUNDRED) > 0) {
                 withdrawAmount -= Banknotes.HUNDRED.getBanknote();
                 minusBanknotesCount(Banknotes.HUNDRED);
                 banknotesForWithdrawal.add(Banknotes.HUNDRED.getBanknote());
             }
-            else if (withdrawAmount / Banknotes.FIFTY.getBanknote() > 0 && fiftyBanknotes > 0) {
+            else if (withdrawAmount / Banknotes.FIFTY.getBanknote() > 0 && banknotes.get(Banknotes.FIFTY) > 0) {
                 withdrawAmount -= Banknotes.FIFTY.getBanknote();
                 minusBanknotesCount(Banknotes.FIFTY);
                 banknotesForWithdrawal.add(Banknotes.FIFTY.getBanknote());
             }
-            else if (withdrawAmount / Banknotes.TEN.getBanknote() > 0 && tenBanknotes > 0) {
+            else if (withdrawAmount / Banknotes.TEN.getBanknote() > 0 && banknotes.get(Banknotes.TEN) > 0) {
                 withdrawAmount -= Banknotes.TEN.getBanknote();
                 minusBanknotesCount(Banknotes.TEN);
                 banknotesForWithdrawal.add(Banknotes.TEN.getBanknote());
@@ -69,28 +77,28 @@ public class BanknotesStoreImpl implements BanknotesStore {
         switch (banknote)
         {
             case TEN:
-                tenBanknotes++;
+                banknotes.put(Banknotes.TEN, banknotes.get(Banknotes.TEN) + 1);
                 break;
             case FIFTY:
-                fiftyBanknotes++;
+                banknotes.put(Banknotes.FIFTY, banknotes.get(Banknotes.FIFTY) + 1);
                 break;
             case HUNDRED:
-                hundredBanknotes++;
+                banknotes.put(Banknotes.HUNDRED, banknotes.get(Banknotes.HUNDRED) + 1);
                 break;
             case TWO_HUNDRED:
-                twoHundredBanknotes++;
+                banknotes.put(Banknotes.TWO_HUNDRED, banknotes.get(Banknotes.TWO_HUNDRED) + 1);
                 break;
             case FIVE_HUNDRED:
-                fiveHundredBanknotes++;
+                banknotes.put(Banknotes.FIVE_HUNDRED, banknotes.get(Banknotes.FIVE_HUNDRED) + 1);
                 break;
             case THOUSAND:
-                thousandBanknotes++;
+                banknotes.put(Banknotes.THOUSAND, banknotes.get(Banknotes.THOUSAND) + 1);
                 break;
             case TWO_THOUSAND:
-                twoThousandBanknotes++;
+                banknotes.put(Banknotes.TWO_THOUSAND, banknotes.get(Banknotes.TWO_THOUSAND) + 1);
                 break;
             case FIVE_THOUSAND:
-                fiveThousandBanknotes++;
+                banknotes.put(Banknotes.FIVE_THOUSAND, banknotes.get(Banknotes.FIVE_THOUSAND) + 1);
                 break;
         }
     }
@@ -100,28 +108,28 @@ public class BanknotesStoreImpl implements BanknotesStore {
         switch (banknote)
         {
             case TEN:
-                tenBanknotes--;
+                banknotes.put(Banknotes.TEN, banknotes.get(Banknotes.TEN) - 1);
                 break;
             case FIFTY:
-                fiftyBanknotes--;
+                banknotes.put(Banknotes.FIFTY, banknotes.get(Banknotes.FIFTY) - 1);
                 break;
             case HUNDRED:
-                hundredBanknotes--;
+                banknotes.put(Banknotes.HUNDRED, banknotes.get(Banknotes.HUNDRED) - 1);
                 break;
             case TWO_HUNDRED:
-                twoHundredBanknotes--;
+                banknotes.put(Banknotes.TWO_HUNDRED, banknotes.get(Banknotes.TWO_HUNDRED) - 1);
                 break;
             case FIVE_HUNDRED:
-                fiveHundredBanknotes--;
+                banknotes.put(Banknotes.FIVE_HUNDRED, banknotes.get(Banknotes.FIVE_HUNDRED) - 1);
                 break;
             case THOUSAND:
-                thousandBanknotes--;
+                banknotes.put(Banknotes.THOUSAND, banknotes.get(Banknotes.THOUSAND) - 1);
                 break;
             case TWO_THOUSAND:
-                twoThousandBanknotes--;
+                banknotes.put(Banknotes.TWO_THOUSAND, banknotes.get(Banknotes.TWO_THOUSAND) - 1);
                 break;
             case FIVE_THOUSAND:
-                fiveThousandBanknotes--;
+                banknotes.put(Banknotes.FIVE_THOUSAND, banknotes.get(Banknotes.FIVE_THOUSAND) - 1);
                 break;
         }
     }
@@ -129,46 +137,46 @@ public class BanknotesStoreImpl implements BanknotesStore {
     @Override
     public void getAvailableBanknotesForWithdraw() {
         StringBuilder availableBanknotes = new StringBuilder("The following banknotes are available for withdrawal:\n");
-        if (tenBanknotes > 0) availableBanknotes.append("\t").append(Banknotes.TEN.getBanknote()).append("₽ = ").append(tenBanknotes).append(" pcs.\n");
-        if (fiftyBanknotes > 0) availableBanknotes.append("\t").append(Banknotes.FIFTY.getBanknote()).append("₽ = ").append(fiftyBanknotes).append(" pcs.\n");
-        if (hundredBanknotes > 0) availableBanknotes.append("\t").append(Banknotes.HUNDRED.getBanknote()).append("₽ = ").append(hundredBanknotes).append(" pcs.\n");
-        if (twoHundredBanknotes > 0) availableBanknotes.append("\t").append(Banknotes.TWO_HUNDRED.getBanknote()).append("₽ = ").append(twoHundredBanknotes).append(" pcs.\n");
-        if (fiveHundredBanknotes > 0) availableBanknotes.append("\t").append(Banknotes.FIVE_HUNDRED.getBanknote()).append("₽ = ").append(fiveHundredBanknotes).append(" pcs.\n");
-        if (thousandBanknotes > 0) availableBanknotes.append("\t").append(Banknotes.THOUSAND.getBanknote()).append("₽ = ").append(thousandBanknotes).append(" pcs.\n");
-        if (twoThousandBanknotes > 0) availableBanknotes.append("\t").append(Banknotes.TWO_THOUSAND.getBanknote()).append("₽ = ").append(twoThousandBanknotes).append(" pcs.\n");
-        if (fiveThousandBanknotes > 0) availableBanknotes.append("\t").append(Banknotes.FIVE_THOUSAND.getBanknote()).append("₽ = ").append(fiveThousandBanknotes).append(" pcs.");
+        if (banknotes.get(Banknotes.TEN) > 0) availableBanknotes.append("\t").append(Banknotes.TEN.getBanknote()).append("₽ = ").append(banknotes.get(Banknotes.TEN)).append(" pcs.\n");
+        if (banknotes.get(Banknotes.FIFTY) > 0) availableBanknotes.append("\t").append(Banknotes.FIFTY.getBanknote()).append("₽ = ").append(banknotes.get(Banknotes.FIFTY)).append(" pcs.\n");
+        if (banknotes.get(Banknotes.HUNDRED) > 0) availableBanknotes.append("\t").append(Banknotes.HUNDRED.getBanknote()).append("₽ = ").append(banknotes.get(Banknotes.HUNDRED)).append(" pcs.\n");
+        if (banknotes.get(Banknotes.TWO_HUNDRED) > 0) availableBanknotes.append("\t").append(Banknotes.TWO_HUNDRED.getBanknote()).append("₽ = ").append(banknotes.get(Banknotes.TWO_HUNDRED)).append(" pcs.\n");
+        if (banknotes.get(Banknotes.FIVE_HUNDRED) > 0) availableBanknotes.append("\t").append(Banknotes.FIVE_HUNDRED.getBanknote()).append("₽ = ").append(banknotes.get(Banknotes.FIVE_HUNDRED)).append(" pcs.\n");
+        if (banknotes.get(Banknotes.THOUSAND) > 0) availableBanknotes.append("\t").append(Banknotes.THOUSAND.getBanknote()).append("₽ = ").append(banknotes.get(Banknotes.THOUSAND)).append(" pcs.\n");
+        if (banknotes.get(Banknotes.TWO_THOUSAND) > 0) availableBanknotes.append("\t").append(Banknotes.TWO_THOUSAND.getBanknote()).append("₽ = ").append(banknotes.get(Banknotes.TWO_THOUSAND)).append(" pcs.\n");
+        if (banknotes.get(Banknotes.FIVE_THOUSAND) > 0) availableBanknotes.append("\t").append(Banknotes.FIVE_THOUSAND.getBanknote()).append("₽ = ").append(banknotes.get(Banknotes.FIVE_THOUSAND)).append(" pcs.");
         System.out.println(availableBanknotes);
     }
 
     public static int getTenBanknotes() {
-        return tenBanknotes;
+        return banknotes.get(Banknotes.TEN);
     }
 
     public static int getFiftyBanknotes() {
-        return fiftyBanknotes;
+        return banknotes.get(Banknotes.FIFTY);
     }
 
     public static int getHundredBanknotes() {
-        return hundredBanknotes;
+        return banknotes.get(Banknotes.HUNDRED);
     }
 
     public static int getTwoHundredBanknotes() {
-        return twoHundredBanknotes;
+        return banknotes.get(Banknotes.TWO_HUNDRED);
     }
 
     public static int getFiveHundredBanknotes() {
-        return fiveHundredBanknotes;
+        return banknotes.get(Banknotes.FIVE_HUNDRED);
     }
 
     public static int getThousandBanknotes() {
-        return thousandBanknotes;
+        return banknotes.get(Banknotes.THOUSAND);
     }
 
     public static int getTwoThousandBanknotes() {
-        return twoThousandBanknotes;
+        return banknotes.get(Banknotes.TWO_THOUSAND);
     }
 
     public static int getFiveThousandBanknotes() {
-        return fiveThousandBanknotes;
+        return banknotes.get(Banknotes.FIVE_THOUSAND);
     }
 }

@@ -5,17 +5,22 @@ import me.decentos.atm.AtmBalanceImpl;
 import me.decentos.atm.AtmOperations;
 import me.decentos.atm.AtmOperationsImpl;
 import me.decentos.banknotes.Banknotes;
+import me.decentos.banknotes.BanknotesStore;
+import me.decentos.banknotes.BanknotesStoreImpl;
 
 public class AtmLogic {
     private int balanceOfAccount;
     private AtmOperations atmOperations = new AtmOperationsImpl();
     private AtmBalance atmBalance = new AtmBalanceImpl();
+    private BanknotesStore banknotesStore = new BanknotesStoreImpl();
 
     public AtmLogic() {
+        banknotesStore.fillAtmByBanknotes();
         this.balanceOfAccount = 0;
     }
 
     public AtmLogic(int balanceOfAccount) {
+        banknotesStore.fillAtmByBanknotes();
         this.balanceOfAccount = balanceOfAccount;
     }
 
