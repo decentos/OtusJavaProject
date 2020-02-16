@@ -1,5 +1,7 @@
 package me.decentos;
 
+import me.decentos.atm.AtmBalance;
+import me.decentos.atm.AtmBalanceImpl;
 import me.decentos.atm.AtmOperations;
 import me.decentos.atm.AtmOperationsImpl;
 import me.decentos.banknotes.Banknotes;
@@ -7,6 +9,7 @@ import me.decentos.banknotes.Banknotes;
 public class AtmLogic {
     private int balanceOfAccount;
     private AtmOperations atmOperations = new AtmOperationsImpl();
+    private AtmBalance atmBalance = new AtmBalanceImpl();
 
     public AtmLogic() {
         this.balanceOfAccount = 0;
@@ -32,7 +35,12 @@ public class AtmLogic {
         atmOperations.deposit(this, this.balanceOfAccount, banknotes);
     }
 
-    public void getBalanceOfAtm() {
-        atmOperations.getBalanceOfAtm();
+    public void getBalanceOfAtmAndAvailableBanknotes(String password) {
+        if (password.equals("passForAdmin")) {
+            atmBalance.getBalanceOfAtmAndAvailableBanknotes();
+        }
+        else {
+            throw new RuntimeException("You entered the wrong password.");
+        }
     }
 }
