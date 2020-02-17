@@ -42,64 +42,12 @@ public class BanknotesStoreImpl implements BanknotesStore {
 
     @Override
     public void plusBanknotesCount(Banknotes banknote) {
-        switch (banknote)
-        {
-            case TEN:
-                banknotes.put(Banknotes.TEN, banknotes.get(Banknotes.TEN) + 1);
-                break;
-            case FIFTY:
-                banknotes.put(Banknotes.FIFTY, banknotes.get(Banknotes.FIFTY) + 1);
-                break;
-            case HUNDRED:
-                banknotes.put(Banknotes.HUNDRED, banknotes.get(Banknotes.HUNDRED) + 1);
-                break;
-            case TWO_HUNDRED:
-                banknotes.put(Banknotes.TWO_HUNDRED, banknotes.get(Banknotes.TWO_HUNDRED) + 1);
-                break;
-            case FIVE_HUNDRED:
-                banknotes.put(Banknotes.FIVE_HUNDRED, banknotes.get(Banknotes.FIVE_HUNDRED) + 1);
-                break;
-            case THOUSAND:
-                banknotes.put(Banknotes.THOUSAND, banknotes.get(Banknotes.THOUSAND) + 1);
-                break;
-            case TWO_THOUSAND:
-                banknotes.put(Banknotes.TWO_THOUSAND, banknotes.get(Banknotes.TWO_THOUSAND) + 1);
-                break;
-            case FIVE_THOUSAND:
-                banknotes.put(Banknotes.FIVE_THOUSAND, banknotes.get(Banknotes.FIVE_THOUSAND) + 1);
-                break;
-        }
+        banknotes.put(banknote, banknotes.get(banknote) + 1);
     }
 
     @Override
     public void minusBanknotesCount(Banknotes banknote) {
-        switch (banknote)
-        {
-            case TEN:
-                banknotes.put(Banknotes.TEN, banknotes.get(Banknotes.TEN) - 1);
-                break;
-            case FIFTY:
-                banknotes.put(Banknotes.FIFTY, banknotes.get(Banknotes.FIFTY) - 1);
-                break;
-            case HUNDRED:
-                banknotes.put(Banknotes.HUNDRED, banknotes.get(Banknotes.HUNDRED) - 1);
-                break;
-            case TWO_HUNDRED:
-                banknotes.put(Banknotes.TWO_HUNDRED, banknotes.get(Banknotes.TWO_HUNDRED) - 1);
-                break;
-            case FIVE_HUNDRED:
-                banknotes.put(Banknotes.FIVE_HUNDRED, banknotes.get(Banknotes.FIVE_HUNDRED) - 1);
-                break;
-            case THOUSAND:
-                banknotes.put(Banknotes.THOUSAND, banknotes.get(Banknotes.THOUSAND) - 1);
-                break;
-            case TWO_THOUSAND:
-                banknotes.put(Banknotes.TWO_THOUSAND, banknotes.get(Banknotes.TWO_THOUSAND) - 1);
-                break;
-            case FIVE_THOUSAND:
-                banknotes.put(Banknotes.FIVE_THOUSAND, banknotes.get(Banknotes.FIVE_THOUSAND) - 1);
-                break;
-        }
+        banknotes.put(banknote, banknotes.get(banknote) - 1);
     }
 
     @Override

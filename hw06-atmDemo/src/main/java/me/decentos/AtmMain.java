@@ -10,9 +10,11 @@ public class AtmMain {
         atmLogic.deposit(Banknotes.FIFTY, Banknotes.FIVE_HUNDRED);
         atmLogic.getBalanceOfAtmAndAvailableBanknotes("passForAdmin");
         atmLogic.withdraw(10_000);
-        atmLogic.getBalanceOfAtmAndAvailableBanknotes("passForAdmin");
         atmLogic.withdraw(8_860);
         atmLogic.withdraw(90);
+        atmLogic.getBalanceOfAtmAndAvailableBanknotes("passForAdmin");
+        atmLogic.deposit(Banknotes.FIFTY, Banknotes.FIFTY, Banknotes.FIVE_HUNDRED, Banknotes.THOUSAND);
+        atmLogic.getBalanceOfAtmAndAvailableBanknotes("passForAdmin");
 //        atmLogic.getBalanceOfAtmAndAvailableBanknotes("123");
 //        atmLogic.withdraw(42);
 //        atmLogic.withdraw(40_000);
