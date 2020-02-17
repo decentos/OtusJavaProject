@@ -22,21 +22,19 @@ public class BanknotesStoreImpl implements BanknotesStore {
     public void receiveBanknotesForWithdrawal(int withdrawAmount) {
         Arrays.sort(Banknotes.values());
         List<Integer> banknotesForWithdrawal = new ArrayList<>();
-        int i = Banknotes.values().length - 1;
-        while (withdrawAmount != 0) {
-            if (i < 0)
-                throw new RuntimeException("There are not enough banknotes in the ATM to withdraw the this amount. Please enter an another amount.");
 
-            for (; i >= 0 ; i--) {
-                if (withdrawAmount / Banknotes.values()[i].getBanknote() > 0 && banknotes.get(Banknotes.values()[i]) > 0) {
-                    withdrawAmount -= Banknotes.values()[i].getBanknote();
-                    minusBanknotesCount(Banknotes.values()[i]);
-                    banknotesForWithdrawal.add(Banknotes.values()[i].getBanknote());
-                    if (withdrawAmount == 0) break;
-                    i++;
-                }
+        for (int i = Banknotes.values().length - 1; i >= 0 ; i--) {
+            if (withdrawAmount / Banknotes.values()[i].getBanknote() > 0 && banknotes.get(Banknotes.values()[i]) > 0) {
+                withdrawAmount -= Banknotes.values()[i].getBanknote();
+                minusBanknotesCount(Banknotes.values()[i]);
+                banknotesForWithdrawal.add(Banknotes.values()[i].getBanknote());
+                if (withdrawAmount == 0) break;
+                i++;
             }
         }
+        if (withdrawAmount != 0)
+            throw new RuntimeException("There are not enough banknotes in the ATM to withdraw the this amount. Please enter an another amount.");
+
         System.out.println("You received: " + banknotesForWithdrawal);
     }
 
