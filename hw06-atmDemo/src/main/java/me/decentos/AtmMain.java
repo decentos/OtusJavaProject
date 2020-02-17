@@ -23,7 +23,7 @@ public class AtmMain {
 //        atmLogic2.withdraw(40);
 //        atmLogic2.withdraw(40);
 //        atmLogic2.getBalanceOfAtmAndAvailableBanknotes("passForAdmin");
-//        atmLogic.getBalanceOfAtmAndAvailableBanknotes("123");
+//        atmLogic2.getBalanceOfAtmAndAvailableBanknotes("123");
 //        atmLogic2.withdraw(30);
     }
 }

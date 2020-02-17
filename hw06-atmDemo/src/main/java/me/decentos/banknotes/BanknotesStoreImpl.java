@@ -1,9 +1,6 @@
 package me.decentos.banknotes;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class BanknotesStoreImpl implements BanknotesStore {
     private static Map<Banknotes, Integer> banknotes = new HashMap<>();
@@ -23,50 +20,21 @@ public class BanknotesStoreImpl implements BanknotesStore {
 
     @Override
     public void receiveBanknotesForWithdrawal(int withdrawAmount) {
+        Arrays.sort(Banknotes.values());
         List<Integer> banknotesForWithdrawal = new ArrayList<>();
+        int i = Banknotes.values().length - 1;
         while (withdrawAmount != 0) {
-            if (withdrawAmount / Banknotes.FIVE_THOUSAND.getBanknote() > 0 && banknotes.get(Banknotes.FIVE_THOUSAND) > 0) {
-                withdrawAmount -= Banknotes.FIVE_THOUSAND.getBanknote();
-                minusBanknotesCount(Banknotes.FIVE_THOUSAND);
-                banknotesForWithdrawal.add(Banknotes.FIVE_THOUSAND.getBanknote());
-            }
-            else if (withdrawAmount / Banknotes.TWO_THOUSAND.getBanknote() > 0 && banknotes.get(Banknotes.TWO_THOUSAND) > 0) {
-                withdrawAmount -= Banknotes.TWO_THOUSAND.getBanknote();
-                minusBanknotesCount(Banknotes.TWO_THOUSAND);
-                banknotesForWithdrawal.add(Banknotes.TWO_THOUSAND.getBanknote());
-            }
-            else if (withdrawAmount / Banknotes.THOUSAND.getBanknote() > 0 && banknotes.get(Banknotes.THOUSAND) > 0) {
-                withdrawAmount -= Banknotes.THOUSAND.getBanknote();
-                minusBanknotesCount(Banknotes.THOUSAND);
-                banknotesForWithdrawal.add(Banknotes.THOUSAND.getBanknote());
-            }
-            else if (withdrawAmount / Banknotes.FIVE_HUNDRED.getBanknote() > 0  && banknotes.get(Banknotes.FIVE_HUNDRED) > 0) {
-                withdrawAmount -= Banknotes.FIVE_HUNDRED.getBanknote();
-                minusBanknotesCount(Banknotes.FIVE_HUNDRED);
-                banknotesForWithdrawal.add(Banknotes.FIVE_HUNDRED.getBanknote());
-            }
-            else if (withdrawAmount / Banknotes.TWO_HUNDRED.getBanknote() > 0 && banknotes.get(Banknotes.TWO_HUNDRED) > 0) {
-                withdrawAmount -= Banknotes.TWO_HUNDRED.getBanknote();
-                minusBanknotesCount(Banknotes.TWO_HUNDRED);
-                banknotesForWithdrawal.add(Banknotes.TWO_HUNDRED.getBanknote());
-            }
-            else if (withdrawAmount / Banknotes.HUNDRED.getBanknote() > 0 && banknotes.get(Banknotes.HUNDRED) > 0) {
-                withdrawAmount -= Banknotes.HUNDRED.getBanknote();
-                minusBanknotesCount(Banknotes.HUNDRED);
-                banknotesForWithdrawal.add(Banknotes.HUNDRED.getBanknote());
-            }
-            else if (withdrawAmount / Banknotes.FIFTY.getBanknote() > 0 && banknotes.get(Banknotes.FIFTY) > 0) {
-                withdrawAmount -= Banknotes.FIFTY.getBanknote();
-                minusBanknotesCount(Banknotes.FIFTY);
-                banknotesForWithdrawal.add(Banknotes.FIFTY.getBanknote());
-            }
-            else if (withdrawAmount / Banknotes.TEN.getBanknote() > 0 && banknotes.get(Banknotes.TEN) > 0) {
-                withdrawAmount -= Banknotes.TEN.getBanknote();
-                minusBanknotesCount(Banknotes.TEN);
-                banknotesForWithdrawal.add(Banknotes.TEN.getBanknote());
-            }
-            else {
+            if (i < 0)
                 throw new RuntimeException("There are not enough banknotes in the ATM to withdraw the this amount. Please enter an another amount.");
+
+            for (; i >= 0 ; i--) {
+                if (withdrawAmount / Banknotes.values()[i].getBanknote() > 0 && banknotes.get(Banknotes.values()[i]) > 0) {
+                    withdrawAmount -= Banknotes.values()[i].getBanknote();
+                    minusBanknotesCount(Banknotes.values()[i]);
+                    banknotesForWithdrawal.add(Banknotes.values()[i].getBanknote());
+                    if (withdrawAmount == 0) break;
+                    i++;
+                }
             }
         }
         System.out.println("You received: " + banknotesForWithdrawal);
