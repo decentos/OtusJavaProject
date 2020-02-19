@@ -6,15 +6,8 @@ public class BanknotesStoreImpl implements BanknotesStore {
     private static Map<Banknotes, Integer> banknotes = new HashMap<>();
 
     public void fillAtmByBanknotes() {
-        for (int i = 0; i < 10; i++) {
-            banknotes.put(Banknotes.TEN, 10);
-            banknotes.put(Banknotes.FIFTY, 10);
-            banknotes.put(Banknotes.HUNDRED, 10);
-            banknotes.put(Banknotes.TWO_HUNDRED, 10);
-            banknotes.put(Banknotes.FIVE_HUNDRED, 10);
-            banknotes.put(Banknotes.THOUSAND, 10);
-            banknotes.put(Banknotes.TWO_THOUSAND, 10);
-            banknotes.put(Banknotes.FIVE_THOUSAND, 10);
+        for (Banknotes item : Banknotes.values()) {
+            banknotes.put(item, 10);
         }
     }
 
@@ -51,46 +44,15 @@ public class BanknotesStoreImpl implements BanknotesStore {
     @Override
     public void getAvailableBanknotesForWithdraw() {
         StringBuilder availableBanknotes = new StringBuilder("The following banknotes are available for withdrawal:\n");
-        if (banknotes.get(Banknotes.TEN) > 0) availableBanknotes.append("\t").append(Banknotes.TEN.getBanknote()).append("₽ = ").append(banknotes.get(Banknotes.TEN)).append(" pcs.\n");
-        if (banknotes.get(Banknotes.FIFTY) > 0) availableBanknotes.append("\t").append(Banknotes.FIFTY.getBanknote()).append("₽ = ").append(banknotes.get(Banknotes.FIFTY)).append(" pcs.\n");
-        if (banknotes.get(Banknotes.HUNDRED) > 0) availableBanknotes.append("\t").append(Banknotes.HUNDRED.getBanknote()).append("₽ = ").append(banknotes.get(Banknotes.HUNDRED)).append(" pcs.\n");
-        if (banknotes.get(Banknotes.TWO_HUNDRED) > 0) availableBanknotes.append("\t").append(Banknotes.TWO_HUNDRED.getBanknote()).append("₽ = ").append(banknotes.get(Banknotes.TWO_HUNDRED)).append(" pcs.\n");
-        if (banknotes.get(Banknotes.FIVE_HUNDRED) > 0) availableBanknotes.append("\t").append(Banknotes.FIVE_HUNDRED.getBanknote()).append("₽ = ").append(banknotes.get(Banknotes.FIVE_HUNDRED)).append(" pcs.\n");
-        if (banknotes.get(Banknotes.THOUSAND) > 0) availableBanknotes.append("\t").append(Banknotes.THOUSAND.getBanknote()).append("₽ = ").append(banknotes.get(Banknotes.THOUSAND)).append(" pcs.\n");
-        if (banknotes.get(Banknotes.TWO_THOUSAND) > 0) availableBanknotes.append("\t").append(Banknotes.TWO_THOUSAND.getBanknote()).append("₽ = ").append(banknotes.get(Banknotes.TWO_THOUSAND)).append(" pcs.\n");
-        if (banknotes.get(Banknotes.FIVE_THOUSAND) > 0) availableBanknotes.append("\t").append(Banknotes.FIVE_THOUSAND.getBanknote()).append("₽ = ").append(banknotes.get(Banknotes.FIVE_THOUSAND)).append(" pcs.");
+        for (Banknotes item : Banknotes.values()) {
+            if (banknotes.get(item) > 0) {
+                availableBanknotes.append("\t").append(item.getBanknote()).append("₽ = ").append(banknotes.get(item)).append(" pcs.\n");
+            }
+        }
         System.out.println(availableBanknotes);
     }
 
-    public static int getTenBanknotes() {
-        return banknotes.get(Banknotes.TEN);
-    }
-
-    public static int getFiftyBanknotes() {
-        return banknotes.get(Banknotes.FIFTY);
-    }
-
-    public static int getHundredBanknotes() {
-        return banknotes.get(Banknotes.HUNDRED);
-    }
-
-    public static int getTwoHundredBanknotes() {
-        return banknotes.get(Banknotes.TWO_HUNDRED);
-    }
-
-    public static int getFiveHundredBanknotes() {
-        return banknotes.get(Banknotes.FIVE_HUNDRED);
-    }
-
-    public static int getThousandBanknotes() {
-        return banknotes.get(Banknotes.THOUSAND);
-    }
-
-    public static int getTwoThousandBanknotes() {
-        return banknotes.get(Banknotes.TWO_THOUSAND);
-    }
-
-    public static int getFiveThousandBanknotes() {
-        return banknotes.get(Banknotes.FIVE_THOUSAND);
+    public static Map<Banknotes, Integer> getBanknotes() {
+        return banknotes;
     }
 }

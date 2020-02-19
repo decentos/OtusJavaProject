@@ -6,7 +6,6 @@ import me.decentos.banknotes.BanknotesStore;
 import me.decentos.banknotes.BanknotesStoreImpl;
 
 public class AtmOperationsImpl implements AtmOperations, AtmBalance {
-    private static int balanceOfAtm;
     private BanknotesStore banknotesStore = new BanknotesStoreImpl();
 
     @Override
@@ -41,19 +40,15 @@ public class AtmOperationsImpl implements AtmOperations, AtmBalance {
 
     @Override
     public void getBalanceOfAtmAndAvailableBanknotes() {
-        getBalanceOfAtm();
-        System.out.println("Balance of ATM: " + balanceOfAtm + "₽");
+        System.out.println("Balance of ATM: " + getBalanceOfAtm() + "₽");
         banknotesStore.getAvailableBanknotesForWithdraw();
     }
 
     public static int getBalanceOfAtm() {
-        return balanceOfAtm = Banknotes.TEN.getBanknote() * BanknotesStoreImpl.getTenBanknotes()
-                + Banknotes.FIFTY.getBanknote() * BanknotesStoreImpl.getFiftyBanknotes()
-                + Banknotes.HUNDRED.getBanknote() * BanknotesStoreImpl.getHundredBanknotes()
-                + Banknotes.TWO_HUNDRED.getBanknote() * BanknotesStoreImpl.getTwoHundredBanknotes()
-                + Banknotes.FIVE_HUNDRED.getBanknote() * BanknotesStoreImpl.getFiveHundredBanknotes()
-                + Banknotes.THOUSAND.getBanknote() * BanknotesStoreImpl.getThousandBanknotes()
-                + Banknotes.TWO_THOUSAND.getBanknote() * BanknotesStoreImpl.getTwoThousandBanknotes()
-                + Banknotes.FIVE_THOUSAND.getBanknote() * BanknotesStoreImpl.getFiveThousandBanknotes();
+        int balanceOfAtm = 0;
+        for (Banknotes item : Banknotes.values()) {
+            balanceOfAtm += item.getBanknote() * BanknotesStoreImpl.getBanknotes().get(item);
+        }
+        return balanceOfAtm;
     }
 }
