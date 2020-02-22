@@ -22,6 +22,7 @@
         <module>hw04-autoLogging</module>
         <module>hw05-myTestFramework</module>
         <module>hw06-atmDemo</module>
+        <module>hw07-atmDepartment</module>
     </modules>
 
     <properties>
