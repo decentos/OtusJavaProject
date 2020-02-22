@@ -7,6 +7,10 @@ import me.decentos.banknotes.BanknotesStoreImpl;
 public class AtmOperationsImpl implements AtmOperations, AtmBalance {
     private BanknotesStore banknotesStore = new BanknotesStoreImpl();
 
+    public AtmOperationsImpl() {
+        banknotesStore.fillAtmByBanknotes();
+    }
+
     @Override
     public void withdraw(AtmLogic atmLogic, int balanceOfAccount, int withdrawAmount) {
         if (withdrawAmount > balanceOfAccount) {
@@ -47,7 +51,7 @@ public class AtmOperationsImpl implements AtmOperations, AtmBalance {
     public int getBalanceOfAtm() {
         int balanceOfAtm = 0;
         for (Banknotes item : Banknotes.values()) {
-            balanceOfAtm += item.getBanknote() * BanknotesStoreImpl.getBanknotes().get(item);
+            balanceOfAtm += item.getBanknote() * banknotesStore.getBanknotes().get(item);
         }
         return balanceOfAtm;
     }

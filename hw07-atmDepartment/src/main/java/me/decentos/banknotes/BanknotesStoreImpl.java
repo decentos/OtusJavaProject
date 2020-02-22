@@ -3,7 +3,7 @@ package me.decentos.banknotes;
 import java.util.*;
 
 public class BanknotesStoreImpl implements BanknotesStore {
-    private static Map<Banknotes, Integer> banknotes = new HashMap<>();
+    private Map<Banknotes, Integer> banknotes = new HashMap<>();
 
     public void fillAtmByBanknotes() {
         for (Banknotes item : Banknotes.values()) {
@@ -52,7 +52,8 @@ public class BanknotesStoreImpl implements BanknotesStore {
         System.out.println(availableBanknotes);
     }
 
-    public static Map<Banknotes, Integer> getBanknotes() {
+    @Override
+    public Map<Banknotes, Integer> getBanknotes() {
         return banknotes;
     }
 }

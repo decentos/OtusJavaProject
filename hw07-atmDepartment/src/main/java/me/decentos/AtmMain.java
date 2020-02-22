@@ -52,14 +52,12 @@ public class AtmMain {
         atmDepartment.getBalanceFromAllAtm();
         System.out.println("=========================");
 
-        System.out.println("Atm 1 " + atm.getBalanceOfAtm("passForAdmin"));
         Atm atm2 = atmDepartment.createAtm(1234);
         atm2.getBalanceOfAtmAndAvailableBanknotes("passForAdmin");
         atm2.startUseAtm(20_000);
         System.out.println("Balance of account 2: " + atm2.getBalanceOfAccount());
 
-//        atmDepartment.getBalanceFromAllAtm();
+        atmDepartment.getBalanceFromAllAtm();
 
-        System.out.println("Atm 1 " + atm.getBalanceOfAtm("passForAdmin"));
     }
 }

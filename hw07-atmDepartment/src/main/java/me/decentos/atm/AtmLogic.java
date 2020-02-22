@@ -1,17 +1,10 @@
 package me.decentos.atm;
 
 import me.decentos.banknotes.Banknotes;
-import me.decentos.banknotes.BanknotesStore;
-import me.decentos.banknotes.BanknotesStoreImpl;
 
 public class AtmLogic {
     private int balanceOfAccount;
-    private AtmOperationsImpl atmOperations = new AtmOperationsImpl();
-    private BanknotesStore banknotesStore = new BanknotesStoreImpl();
-
-    public AtmLogic() {
-        banknotesStore.fillAtmByBanknotes();
-    }
+    private AtmOperations atmOperations = new AtmOperationsImpl();
 
     public void startUseAtm(int balanceOfAccount) {
         this.balanceOfAccount = balanceOfAccount;

@@ -5,6 +5,5 @@ public class Atm extends AtmLogic {
 
     public Atm(int atmNumber) {
         this.atmNumber = atmNumber;
-        new AtmLogic();
     }
 }
