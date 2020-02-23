@@ -7,7 +7,7 @@ import me.decentos.banknotes.Banknotes;
 
 public class AtmMain {
     public static void main(String[] args) {
-//        AtmLogic atmLogic = new AtmLogic();
+//        AtmLogic atmLogic = new AtmLogicImpl();
 //        atmLogic.startUseAtm(20_000);
 //        atmLogic.getBalanceOfAtmAndAvailableBanknotes("passForAdmin");
 //        System.out.println("Balance of account: " + atmLogic.getBalanceOfAccount() + "₽");
@@ -23,7 +23,8 @@ public class AtmMain {
 //        atmLogic.withdraw(42);
 //        atmLogic.withdraw(40_000);
 
-//        AtmLogic atmLogic2 = new AtmLogic(100_000);
+//        AtmLogic atmLogic2 = new AtmLogicImpl();
+//        atmLogic2.startUseAtm(100_000);
 //        atmLogic2.getBalanceOfAtmAndAvailableBanknotes("passForAdmin");
 //        atmLogic2.withdraw(82_000);
 //        atmLogic2.withdraw(40);
