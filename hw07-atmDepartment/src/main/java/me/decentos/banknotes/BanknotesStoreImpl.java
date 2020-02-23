@@ -12,6 +12,13 @@ public class BanknotesStoreImpl implements BanknotesStore {
     }
 
     @Override
+    public void resetBalanceOfAtm() {
+        for (Banknotes item : Banknotes.values()) {
+            banknotes.put(item, 0);
+        }
+    }
+
+    @Override
     public void receiveBanknotesForWithdrawal(int withdrawAmount) {
         Arrays.sort(Banknotes.values());
         List<Integer> banknotesForWithdrawal = new ArrayList<>();

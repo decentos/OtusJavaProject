@@ -11,15 +11,17 @@ public class AtmDepartmentImpl implements AtmDepartment {
     @Override
     public void getBalanceFromAllAtm() {
         int balanceOfAllAtm = 0;
-        for (int i = 0; i < atmList.size(); i++) {
-            balanceOfAllAtm += atmList.get(i).getBalanceOfAtm("passForAdmin");
+        for (Atm atm : atmList) {
+            balanceOfAllAtm += atm.getBalanceOfAtm("passForAdmin");
         }
         System.out.println("Balance of all ATM's: " + balanceOfAllAtm + "₽");
     }
 
     @Override
-    public void doAllAtmToDefaultState() {
-
+    public void resetAllAtmToDefaultState() {
+        for (Atm atm : atmList) {
+            atm.resetAtmToDefaultState();
+        }
     }
 
     @Override

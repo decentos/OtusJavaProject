@@ -55,8 +55,11 @@ public class AtmMain {
         Atm atm2 = atmDepartment.createAtm(1234);
         atm2.getBalanceOfAtmAndAvailableBanknotes("passForAdmin");
         atm2.startUseAtm(20_000);
+        atm2.withdraw(15_000);
         System.out.println("Balance of account 2: " + atm2.getBalanceOfAccount());
-
+        System.out.println("=========================");
+        atmDepartment.getBalanceFromAllAtm();
+        atmDepartment.resetAllAtmToDefaultState();
         atmDepartment.getBalanceFromAllAtm();
 
     }

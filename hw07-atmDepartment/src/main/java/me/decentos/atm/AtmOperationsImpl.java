@@ -12,6 +12,12 @@ public class AtmOperationsImpl implements AtmOperations, AtmBalance {
     }
 
     @Override
+    public void resetAtmToDefaultState() {
+        banknotesStore.resetBalanceOfAtm();
+        banknotesStore.fillAtmByBanknotes();
+    }
+
+    @Override
     public void withdraw(AtmLogic atmLogic, int balanceOfAccount, int withdrawAmount) {
         if (withdrawAmount > balanceOfAccount) {
             throw new RuntimeException("Not enough money for withdraw! Your balance: " + atmLogic.getBalanceOfAccount() + "₽");

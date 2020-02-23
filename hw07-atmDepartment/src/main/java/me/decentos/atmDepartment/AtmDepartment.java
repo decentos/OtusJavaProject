@@ -4,6 +4,6 @@ import me.decentos.atm.Atm;
 
 public interface AtmDepartment {
     void getBalanceFromAllAtm();
-    void doAllAtmToDefaultState(); // через копирование
+    void resetAllAtmToDefaultState(); // через копирование
     Atm createAtm(int atmNumber);
 }
