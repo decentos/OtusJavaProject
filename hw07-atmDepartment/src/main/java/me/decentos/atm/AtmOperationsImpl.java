@@ -4,17 +4,11 @@ import me.decentos.banknotes.Banknotes;
 import me.decentos.banknotes.BanknotesStore;
 import me.decentos.banknotes.BanknotesStoreImpl;
 
-public class AtmOperationsImpl implements AtmOperations, AtmBalance {
+public class AtmOperationsImpl implements AtmOperations {
     private BanknotesStore banknotesStore = new BanknotesStoreImpl();
 
-    public AtmOperationsImpl() {
-        banknotesStore.fillAtmByBanknotes();
-    }
-
-    @Override
-    public void resetAtmToDefaultState() {
-        banknotesStore.resetBalanceOfAtm();
-        banknotesStore.fillAtmByBanknotes();
+    public AtmOperationsImpl(int fillCount) {
+        banknotesStore.fillAtmByBanknotes(fillCount);
     }
 
     @Override

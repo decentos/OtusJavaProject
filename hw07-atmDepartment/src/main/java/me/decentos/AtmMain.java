@@ -7,7 +7,7 @@ import me.decentos.banknotes.Banknotes;
 
 public class AtmMain {
     public static void main(String[] args) {
-//        AtmLogic atmLogic = new AtmLogicImpl();
+//        AtmLogic atmLogic = new AtmLogicImpl(10);
 //        atmLogic.startUseAtm(20_000);
 //        atmLogic.getBalanceOfAtmAndAvailableBanknotes("passForAdmin");
 //        System.out.println("Balance of account: " + atmLogic.getBalanceOfAccount() + "₽");
@@ -23,7 +23,7 @@ public class AtmMain {
 //        atmLogic.withdraw(42);
 //        atmLogic.withdraw(40_000);
 
-//        AtmLogic atmLogic2 = new AtmLogicImpl();
+//        AtmLogic atmLogic2 = new AtmLogicImpl(10);
 //        atmLogic2.startUseAtm(100_000);
 //        atmLogic2.getBalanceOfAtmAndAvailableBanknotes("passForAdmin");
 //        atmLogic2.withdraw(82_000);
@@ -37,7 +37,7 @@ public class AtmMain {
         atmDepartment.getBalanceFromAllAtm();
         System.out.println("=========================");
 
-        Atm atm = atmDepartment.createAtm(123);
+        Atm atm = atmDepartment.createAtm(5);
         atmDepartment.getBalanceFromAllAtm();
         System.out.println("=========================");
 
@@ -53,7 +53,7 @@ public class AtmMain {
         atmDepartment.getBalanceFromAllAtm();
         System.out.println("=========================");
 
-        Atm atm2 = atmDepartment.createAtm(1234);
+        Atm atm2 = atmDepartment.createAtm(7);
         atm2.getBalanceOfAtmAndAvailableBanknotes("passForAdmin");
         atm2.startUseAtm(20_000);
         atm2.withdraw(15_000);

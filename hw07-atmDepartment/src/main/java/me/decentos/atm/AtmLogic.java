@@ -10,5 +10,4 @@ public interface AtmLogic {
     void deposit(Banknotes... banknotes);
     void getBalanceOfAtmAndAvailableBanknotes(String password);
     int getBalanceOfAtm(String password);
-    void resetAtmToDefaultState();
 }

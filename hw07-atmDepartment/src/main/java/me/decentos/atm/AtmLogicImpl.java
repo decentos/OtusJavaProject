@@ -4,7 +4,11 @@ import me.decentos.banknotes.Banknotes;
 
 public class AtmLogicImpl implements AtmLogic {
     private int balanceOfAccount;
-    private AtmOperations atmOperations = new AtmOperationsImpl();
+    private AtmOperations atmOperations;
+
+    public AtmLogicImpl(int fillCount) {
+        atmOperations = new AtmOperationsImpl(fillCount);
+    }
 
     @Override
     public void startUseAtm(int balanceOfAccount) {
@@ -49,10 +53,5 @@ public class AtmLogicImpl implements AtmLogic {
         else {
             throw new RuntimeException("You entered the wrong password.");
         }
-    }
-
-    @Override
-    public void resetAtmToDefaultState() {
-        atmOperations.resetAtmToDefaultState();
     }
 }

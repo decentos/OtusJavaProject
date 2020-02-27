@@ -5,16 +5,9 @@ import java.util.*;
 public class BanknotesStoreImpl implements BanknotesStore {
     private Map<Banknotes, Integer> banknotes = new HashMap<>();
 
-    public void fillAtmByBanknotes() {
+    public void fillAtmByBanknotes(int fillCount) {
         for (Banknotes item : Banknotes.values()) {
-            banknotes.put(item, 10);
-        }
-    }
-
-    @Override
-    public void resetBalanceOfAtm() {
-        for (Banknotes item : Banknotes.values()) {
-            banknotes.put(item, 0);
+            banknotes.put(item, fillCount);
         }
     }
 

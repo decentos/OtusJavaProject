@@ -7,7 +7,6 @@ public interface BanknotesStore {
     void plusBanknotesCount(Banknotes banknote);
     void minusBanknotesCount(Banknotes banknote);
     void getAvailableBanknotesForWithdraw();
-    void fillAtmByBanknotes();
-    void resetBalanceOfAtm();
+    void fillAtmByBanknotes(int fillCount);
     Map<Banknotes, Integer> getBanknotes();
 }

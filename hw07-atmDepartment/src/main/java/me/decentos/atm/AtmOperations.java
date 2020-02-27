@@ -7,5 +7,4 @@ public interface AtmOperations {
     void deposit(AtmLogic atmLogic, int balanceOfAccount, Banknotes... banknotes);
     void getBalanceOfAtmAndAvailableBanknotes();
     int getBalanceOfAtm();
-    void resetAtmToDefaultState();
 }
