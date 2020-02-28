@@ -34,11 +34,11 @@ public class AtmMain {
 //        atmLogic2.withdraw(30);
 
         AtmDepartment atmDepartment = new AtmDepartmentImpl();
-        atmDepartment.getBalanceFromAllAtm();
+        atmDepartment.getBalanceFromAllAtm();           // Observer Pattern
         System.out.println("=========================");
 
-        Atm atm = atmDepartment.createAtm(5);
-        atmDepartment.getBalanceFromAllAtm();
+        Atm atm = atmDepartment.createAtm(5);   // Factory Method
+        atmDepartment.getBalanceFromAllAtm();           // Observer Pattern
         System.out.println("=========================");
 
         atm.getBalanceOfAtmAndAvailableBanknotes("passForAdmin");
@@ -50,18 +50,23 @@ public class AtmMain {
         atm.withdraw(8_860);
         atm.withdraw(90);
         atm.getBalanceOfAtmAndAvailableBanknotes("passForAdmin");
-        atmDepartment.getBalanceFromAllAtm();
+        atmDepartment.getBalanceFromAllAtm();           // Observer Pattern
         System.out.println("=========================");
 
-        Atm atm2 = atmDepartment.createAtm(7);
+        Atm atm2 = atmDepartment.createAtm(7);  // Factory Method
         atm2.getBalanceOfAtmAndAvailableBanknotes("passForAdmin");
         atm2.startUseAtm(20_000);
         atm2.withdraw(15_000);
         System.out.println("Balance of account 2: " + atm2.getBalanceOfAccount());
         System.out.println("=========================");
-        atmDepartment.getBalanceFromAllAtm();
-        atmDepartment.resetAllAtmToDefaultState();
-        atmDepartment.getBalanceFromAllAtm();
 
+        atmDepartment.getBalanceFromAllAtm();       // Observer Pattern
+        atmDepartment.resetAllAtmToDefaultState();  // Memento Pattern
+        atmDepartment.getBalanceFromAllAtm();       // Observer Pattern
+
+        atmDepartment.resetAllAtmToDefaultState();  // Memento Pattern
+        atmDepartment.getBalanceFromAllAtm();       // Observer Pattern
+        atmDepartment.resetAllAtmToDefaultState();  // Memento Pattern
+        atmDepartment.getBalanceFromAllAtm();       // Observer Pattern
     }
 }

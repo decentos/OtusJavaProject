@@ -1,6 +1,7 @@
 package me.decentos.atm;
 
 import me.decentos.banknotes.Banknotes;
+import me.decentos.observerPattern.Listener;
 
 public class AtmLogicImpl implements AtmLogic {
     private int balanceOfAccount;
@@ -53,5 +54,11 @@ public class AtmLogicImpl implements AtmLogic {
         else {
             throw new RuntimeException("You entered the wrong password.");
         }
+    }
+
+    private final Listener listener = () -> atmOperations.getBalanceOfAtm();
+
+    public Listener getListener() {
+        return listener;
     }
 }
