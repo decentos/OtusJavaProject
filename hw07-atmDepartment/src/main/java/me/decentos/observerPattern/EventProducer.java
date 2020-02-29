@@ -4,21 +4,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EventProducer {
-    private final List<Listener> listeners = new ArrayList<>();
+    private final List<Balance> balances = new ArrayList<>();
 
-    public void addListener(Listener listener) {
-        listeners.add(listener);
+    public void addListener(Balance balance) {
+        balances.add(balance);
     }
 
     public void removeAllListeners() {
-        listeners.clear();
+        balances.clear();
     }
 
-    public int event() {
-        int balance = 0;
-        for (Listener listener : listeners) {
-            balance += listener.getBalance();
+    public int getBalanceOfAllAtm() {
+        int balanceOfAllAtm = 0;
+        for (Balance balance : balances) {
+            balanceOfAllAtm += balance.getBalance();
         }
-        return balance;
+        return balanceOfAllAtm;
     }
 }

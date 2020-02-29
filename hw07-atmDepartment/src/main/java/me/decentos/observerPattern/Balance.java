@@ -1,5 +1,5 @@
 package me.decentos.observerPattern;
 
-public interface Listener {
+public interface Balance {
     int getBalance();
 }

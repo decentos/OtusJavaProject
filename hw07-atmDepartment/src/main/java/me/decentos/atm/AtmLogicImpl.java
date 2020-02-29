@@ -1,7 +1,7 @@
 package me.decentos.atm;
 
 import me.decentos.banknotes.Banknotes;
-import me.decentos.observerPattern.Listener;
+import me.decentos.observerPattern.Balance;
 
 public class AtmLogicImpl implements AtmLogic {
     private int balanceOfAccount;
@@ -56,9 +56,9 @@ public class AtmLogicImpl implements AtmLogic {
         }
     }
 
-    private final Listener listener = () -> atmOperations.getBalanceOfAtm();
+    private final Balance balance = () -> atmOperations.getBalanceOfAtm();
 
-    public Listener getListener() {
-        return listener;
+    public Balance getBalance() {
+        return balance;
     }
 }

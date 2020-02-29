@@ -11,21 +11,21 @@ public class AtmDepartmentImpl implements AtmDepartment {
 
     @Override
     public void getBalanceFromAllAtm() {
-        System.out.println("Balance of all ATM's: " + producer.event() + "₽");
+        System.out.println("Balance of all ATM's: " + producer.getBalanceOfAllAtm() + "₽");
     }
 
     @Override
     public void resetAllAtmToDefaultState() {
         producer.removeAllListeners();
         for (Atm atm : memento.restore()) {
-            producer.addListener(atm.getListener());
+            producer.addListener(atm.getBalance());
         }
     }
 
     @Override
     public Atm createAtm(int fillCount) {
         Atm atm = new Atm(fillCount);
-        producer.addListener(atm.getListener());
+        producer.addListener(atm.getBalance());
         memento.makeCopy(new Atm(fillCount));
         return atm;
     }
