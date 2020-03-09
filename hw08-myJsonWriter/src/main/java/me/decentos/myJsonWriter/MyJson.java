@@ -1,5 +1,5 @@
 package me.decentos.myJsonWriter;
 
 public interface MyJson {
-    String toJson(Object obj);
+    String toJson(Object object);
 }
