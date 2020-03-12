@@ -5,13 +5,14 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Objects;
 
 public class MyJsonImpl implements MyJson {
 
     @Override
     public String toJson(Object object) {
-        Objects.requireNonNull(object);
+        if (object == null) {
+            return null;
+        }
         Class<?> clazz = object.getClass();
 
         if (clazz.isArray()) {
