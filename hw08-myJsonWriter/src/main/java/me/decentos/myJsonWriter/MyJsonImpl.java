@@ -21,6 +21,18 @@ public class MyJsonImpl implements MyJson {
         else if (object instanceof Collection) {
             return getJsonFromCollection((Collection<?>) object);
         }
+        else if (object instanceof Number) {
+            return object.toString();
+        }
+        else if (object instanceof String) {
+            return "\"" + object + "\"";
+        }
+        else if (object instanceof Boolean) {
+            return object.toString();
+        }
+        else if (object instanceof Character) {
+            return "\"" + object + "\"";
+        }
         else {
             return getJsonFromObject(object, clazz);
         }
