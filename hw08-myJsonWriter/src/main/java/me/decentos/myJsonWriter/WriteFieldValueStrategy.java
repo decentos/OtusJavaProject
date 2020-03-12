@@ -5,9 +5,7 @@ import java.util.function.Predicate;
 
 public enum WriteFieldValueStrategy {
     SIMPLE(o -> o == null || o instanceof Number || o instanceof Boolean, String::valueOf),
-
-    STR(o -> o instanceof String, o -> "\"" + o + "\""),
-
+    TEXT(o -> o instanceof String || o instanceof Character, o -> "\"" + o + "\""),
     DEFAULT {};
 
     WriteFieldValueStrategy() {}
