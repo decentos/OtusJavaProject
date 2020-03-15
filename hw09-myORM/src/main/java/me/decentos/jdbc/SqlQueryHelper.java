@@ -16,16 +16,14 @@ public class SqlQueryHelper {
 
     public static String createInsertStatementForClass(Class<?> clazz) {
         List<String> fieldsToInsert = getNonIdFieldNames(clazz);
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("insert into ");
-        stringBuilder.append(clazz.getSimpleName().toLowerCase());
-        stringBuilder.append("(");
-        stringBuilder.append(String.join(",", fieldsToInsert));
-        stringBuilder.append(")");
-        stringBuilder.append(" values(");
-        stringBuilder.append(String.join(",", Collections.nCopies(fieldsToInsert.size(), "?")));
-        stringBuilder.append(")");
-        return stringBuilder.toString();
+        return "insert into " +
+                clazz.getSimpleName().toLowerCase() +
+                "(" +
+                String.join(",", fieldsToInsert) +
+                ")" +
+                " values(" +
+                String.join(",", Collections.nCopies(fieldsToInsert.size(), "?")) +
+                ")";
     }
 
     public static String createUpdateStatementForClass(Class<?> clazz) {
@@ -41,15 +39,13 @@ public class SqlQueryHelper {
             String newVal = String.format("%s = ?", fieldsToUpdate.get(i));
             fieldsToUpdate.set(i, newVal);
         }
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("update ");
-        stringBuilder.append(clazz.getSimpleName().toLowerCase());
-        stringBuilder.append(" set ");
-        stringBuilder.append(String.join(",", fieldsToUpdate));
-        stringBuilder.append(" where ");
-        stringBuilder.append(idField.getName());
-        stringBuilder.append(" = ?");
-        return stringBuilder.toString();
+        return "update " +
+                clazz.getSimpleName().toLowerCase() +
+                " set " +
+                String.join(",", fieldsToUpdate) +
+                " where " +
+                idField.getName() +
+                " = ?";
     }
 
     public static String createSelectStatementForClass(Class<?> clazz) {
@@ -62,15 +58,13 @@ public class SqlQueryHelper {
         }
         List<String> fieldsToSelect = getNonIdFieldNames(clazz);
         fieldsToSelect.add(0, idField.getName());
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("select ");
-        stringBuilder.append(String.join(", ", fieldsToSelect));
-        stringBuilder.append(" from ");
-        stringBuilder.append(clazz.getSimpleName().toLowerCase());
-        stringBuilder.append(" where ");
-        stringBuilder.append(idField.getName());
-        stringBuilder.append(" = ?");
-        return stringBuilder.toString();
+        return "select " +
+                String.join(", ", fieldsToSelect) +
+                " from " +
+                clazz.getSimpleName().toLowerCase() +
+                " where " +
+                idField.getName() +
+                " = ?";
     }
 
     public static Field getIdField(Class<?> clazz) throws NoSuchFieldException {
@@ -80,7 +74,7 @@ public class SqlQueryHelper {
     }
 
     public static List<Field> getNonIdFields(Class<?> clazz) {
-        Field idField = null;
+        Field idField;
         try {
             idField = getIdField(clazz);
         } catch (NoSuchFieldException e) {

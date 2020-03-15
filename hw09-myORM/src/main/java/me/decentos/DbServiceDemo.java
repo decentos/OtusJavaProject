@@ -64,13 +64,13 @@ public class DbServiceDemo {
         // создание аккаунта
         Account account = new Account();
         account.setType("First");
-        account.setRest(new BigDecimal(100.1));
+        account.setRest(new BigDecimal("100.1"));
 
         long accNo = dbServiceAccount.saveAccount(account);
 
         // изменение существующего
         Account acc1 = dbServiceAccount.getAccount(accNo).get();
-        acc1.setRest(new BigDecimal(252.5));
+        acc1.setRest(new BigDecimal("252.5"));
         dbServiceAccount.saveAccount(acc1);
         dbServiceAccount.getAccount(accNo);
 
