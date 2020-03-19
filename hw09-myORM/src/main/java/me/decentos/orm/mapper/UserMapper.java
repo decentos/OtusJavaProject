@@ -1,7 +1,6 @@
-package me.decentos.h2.mapper;
+package me.decentos.orm.mapper;
 
 
-import me.decentos.orm.ORMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

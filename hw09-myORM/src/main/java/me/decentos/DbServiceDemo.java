@@ -9,11 +9,11 @@ import me.decentos.core.service.DBServiceUser;
 import me.decentos.core.service.DbServiceAccountImpl;
 import me.decentos.core.service.DbServiceUserImpl;
 import me.decentos.h2.DataSourceH2;
-import me.decentos.h2.mapper.AccountMapper;
-import me.decentos.h2.mapper.UserMapper;
 import me.decentos.jdbc.dao.AccountDaoJdbc;
 import me.decentos.jdbc.dao.UserDaoJdbc;
 import me.decentos.jdbc.sessionmanager.SessionManagerJdbc;
+import me.decentos.orm.mapper.AccountMapper;
+import me.decentos.orm.mapper.UserMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

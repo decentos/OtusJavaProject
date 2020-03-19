@@ -1,4 +1,4 @@
-package me.decentos.orm;
+package me.decentos.orm.mapper;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
