@@ -29,8 +29,8 @@ public class DbServiceDemo {
         DataSource dataSource = new DataSourceH2();
         SessionManagerJdbc sessionManager = new SessionManagerJdbc(dataSource);
 
-        new UserMapper(dataSource).createTable();
-        new AccountMapper(dataSource).createTable();
+        new UserMapper(dataSource).createTable("create table if not exists user(id bigint(20) NOT NULL auto_increment, name varchar(255), age int(3))");
+        new AccountMapper(dataSource).createTable("create table if not exists account(no bigint(20) NOT NULL auto_increment, type varchar(255), rest number)");
 
         UserDao userDao = new UserDaoJdbc(sessionManager);
         DBServiceUser dbServiceUser = new DbServiceUserImpl(userDao);
