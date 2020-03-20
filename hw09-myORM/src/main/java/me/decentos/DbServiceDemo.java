@@ -14,17 +14,12 @@ import me.decentos.jdbc.dao.UserDaoJdbc;
 import me.decentos.jdbc.sessionmanager.SessionManagerJdbc;
 import me.decentos.mapper.AccountMapper;
 import me.decentos.mapper.UserMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.sql.DataSource;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 
-
 public class DbServiceDemo {
-    private static Logger logger = LoggerFactory.getLogger(DbServiceDemo.class);
-
     public static void main(String[] args) throws SQLException {
         DataSource dataSource = new DataSourceH2();
         SessionManagerJdbc sessionManager = new SessionManagerJdbc(dataSource);
@@ -58,6 +53,8 @@ public class DbServiceDemo {
         dbServiceUser.saveUser(user1Upd);
         dbServiceUser.getUser(user1Upd.getId());
 
+        System.out.println("==================================");
+
         AccountDao accountDao = new AccountDaoJdbc(sessionManager);
         DBServiceAccount dbServiceAccount = new DbServiceAccountImpl(accountDao);
 
@@ -76,6 +73,5 @@ public class DbServiceDemo {
 
         // получение несуществующего
         dbServiceAccount.getAccount(new Account().getNo());
-
     }
 }

@@ -4,9 +4,10 @@ import me.decentos.core.dao.AccountDao;
 import me.decentos.core.dao.UserDaoException;
 import me.decentos.core.model.Account;
 import me.decentos.core.sessionmanager.SessionManager;
-import me.decentos.jdbc.DbExecutor;
 import me.decentos.jdbc.DbExecutorException;
 import me.decentos.jdbc.sessionmanager.SessionManagerJdbc;
+import me.decentos.mapper.jdbc.JdbcMapper;
+import me.decentos.mapper.jdbc.JdbcMapperImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,8 +25,8 @@ public class AccountDaoJdbc implements AccountDao {
     @Override
     public Optional<Account> findByNo(long no) {
         try {
-            DbExecutor<Account> dbExecutor = getExecutor();
-            return dbExecutor.load(no, Account.class);
+            JdbcMapper<Account> mapper = getMapper();
+            return mapper.load(no, Account.class);
         } catch (DbExecutorException e) {
             logger.error(e.getMessage(), e);
         }
@@ -35,8 +36,8 @@ public class AccountDaoJdbc implements AccountDao {
     @Override
     public long saveAccount(Account account) {
         try {
-            DbExecutor<Account> dbExecutor = getExecutor();
-            dbExecutor.createOrUpdate(account);
+            JdbcMapper<Account> mapper = getMapper();
+            mapper.createOrUpdate(account);
             return account.getNo();
         } catch (DbExecutorException e) {
             logger.error(e.getMessage(), e);
@@ -49,7 +50,7 @@ public class AccountDaoJdbc implements AccountDao {
         return sessionManager;
     }
 
-    private DbExecutor<Account> getExecutor() {
-        return new DbExecutor<>(sessionManager.getCurrentSession().getConnection(), Account.class);
+    private JdbcMapper<Account> getMapper() {
+        return new JdbcMapperImpl<>(sessionManager.getCurrentSession().getConnection(), Account.class);
     }
 }
