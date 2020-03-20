@@ -1,4 +1,4 @@
-package me.decentos.orm;
+package me.decentos.core.model;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;

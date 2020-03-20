@@ -12,8 +12,8 @@ import me.decentos.h2.DataSourceH2;
 import me.decentos.jdbc.dao.AccountDaoJdbc;
 import me.decentos.jdbc.dao.UserDaoJdbc;
 import me.decentos.jdbc.sessionmanager.SessionManagerJdbc;
-import me.decentos.orm.mapper.AccountMapper;
-import me.decentos.orm.mapper.UserMapper;
+import me.decentos.mapper.AccountMapper;
+import me.decentos.mapper.UserMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

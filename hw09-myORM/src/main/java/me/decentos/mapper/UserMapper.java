@@ -1,4 +1,5 @@
-package me.decentos.orm.mapper;
+package me.decentos.mapper;
+
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,11 +9,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class AccountMapper {
-    private final static Logger logger = LoggerFactory.getLogger(AccountMapper.class);
+public class UserMapper {
+    private final static Logger logger = LoggerFactory.getLogger(UserMapper.class);
     private final DataSource dataSource;
 
-    public AccountMapper(DataSource dataSource) {
+    public UserMapper(DataSource dataSource) {
         this.dataSource = dataSource;
     }
 
@@ -21,6 +22,6 @@ public class AccountMapper {
              PreparedStatement pst = connection.prepareStatement(createTableSql)) {
             pst.executeUpdate();
         }
-        logger.info("Table for Account created");
+        logger.info("Table for User created");
     }
 }

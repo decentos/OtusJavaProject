@@ -1,7 +1,5 @@
 package me.decentos.core.model;
 
-import me.decentos.orm.Id;
-
 import java.util.Objects;
 
 public class User {
