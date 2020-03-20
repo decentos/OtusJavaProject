@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 public class SqlQueryHelper {
     private final static Logger logger = LoggerFactory.getLogger(SqlQueryHelper.class);
 
-    public static String createInsertStatementForClass(Class<?> clazz) {
+    public static String insertStatementForClass(Class<?> clazz) {
         List<String> fieldsToInsert = getNonIdFieldNames(clazz);
         return "insert into " +
                 clazz.getSimpleName().toLowerCase() +
@@ -26,8 +26,8 @@ public class SqlQueryHelper {
                 ")";
     }
 
-    public static String createUpdateStatementForClass(Class<?> clazz) {
-        Field idField = null;
+    public static String updateStatementForClass(Class<?> clazz) {
+        Field idField;
         try {
             idField = getIdField(clazz);
         } catch (NoSuchFieldException e) {
@@ -48,8 +48,8 @@ public class SqlQueryHelper {
                 " = ?";
     }
 
-    public static String createSelectStatementForClass(Class<?> clazz) {
-        Field idField = null;
+    public static String selectStatementForClass(Class<?> clazz) {
+        Field idField;
         try {
             idField = getIdField(clazz);
         } catch (NoSuchFieldException e) {

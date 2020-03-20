@@ -22,9 +22,9 @@ public class DbExecutor<T> {
   public DbExecutor(Connection connection, Class<T> clazz) {
     this.connection = connection;
     this.clazz = clazz;
-    this.selectStmt = SqlQueryHelper.createSelectStatementForClass(this.clazz);
-    this.insertStmt = SqlQueryHelper.createInsertStatementForClass(this.clazz);
-    this.updateStmt = SqlQueryHelper.createUpdateStatementForClass(this.clazz);
+    this.selectStmt = SqlQueryHelper.selectStatementForClass(this.clazz);
+    this.insertStmt = SqlQueryHelper.insertStatementForClass(this.clazz);
+    this.updateStmt = SqlQueryHelper.updateStatementForClass(this.clazz);
   }
 
   public void create(T objectData) throws DbExecutorException {
