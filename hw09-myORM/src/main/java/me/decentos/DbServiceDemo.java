@@ -27,8 +27,8 @@ public class DbServiceDemo {
         JdbcMapper<User> userMapper = new JdbcMapperImpl<>(User.class);
         JdbcMapper<Account> accountMapper = new JdbcMapperImpl<>(Account.class);
 
-        new SqlMapper<User>(dataSource).createTable("create table if not exists user(id bigint(20) NOT NULL auto_increment, name varchar(255), age int(3))", User.class);
-        new SqlMapper<Account>(dataSource).createTable("create table if not exists account(no bigint(20) NOT NULL auto_increment, type varchar(255), rest number)", Account.class);
+        new SqlMapper(dataSource).createTable("create table if not exists user(id bigint(20) NOT NULL auto_increment, name varchar(255), age int(3))", User.class);
+        new SqlMapper(dataSource).createTable("create table if not exists account(no bigint(20) NOT NULL auto_increment, type varchar(255), rest number)", Account.class);
 
         UserDao userDao = new UserDaoJdbc(sessionManager, userMapper);
         DBServiceUser dbServiceUser = new DbServiceUserImpl(userDao);

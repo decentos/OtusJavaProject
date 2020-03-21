@@ -8,7 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class SqlMapper<T> {
+public class SqlMapper {
     private final static Logger logger = LoggerFactory.getLogger(SqlMapper.class);
     private final DataSource dataSource;
 
@@ -16,7 +16,7 @@ public class SqlMapper<T> {
         this.dataSource = dataSource;
     }
 
-    public void createTable(String createTableSql, Class<T> clazz) throws SQLException {
+    public void createTable(String createTableSql, Class<?> clazz) throws SQLException {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement pst = connection.prepareStatement(createTableSql)) {
             pst.executeUpdate();
