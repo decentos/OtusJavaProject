@@ -7,7 +7,6 @@ import me.decentos.core.sessionmanager.SessionManager;
 import me.decentos.jdbc.DbExecutorException;
 import me.decentos.jdbc.sessionmanager.SessionManagerJdbc;
 import me.decentos.mapper.jdbc.JdbcMapper;
-import me.decentos.mapper.jdbc.JdbcMapperImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,16 +16,17 @@ public class AccountDaoJdbc implements AccountDao {
     private static Logger logger = LoggerFactory.getLogger(AccountDaoJdbc.class);
 
     private final SessionManagerJdbc sessionManager;
+    private final JdbcMapper<Account> mapper;
 
-    public AccountDaoJdbc(SessionManagerJdbc sessionManager) {
+    public AccountDaoJdbc(SessionManagerJdbc sessionManager, JdbcMapper<Account> mapper) {
         this.sessionManager = sessionManager;
+        this.mapper = mapper;
     }
 
     @Override
     public Optional<Account> findByNo(long no) {
         try {
-            JdbcMapper<Account> mapper = getMapper();
-            return mapper.load(no, Account.class);
+            return mapper.load(sessionManager.getCurrentSession().getConnection(), no, Account.class);
         } catch (DbExecutorException e) {
             logger.error(e.getMessage(), e);
         }
@@ -36,8 +36,7 @@ public class AccountDaoJdbc implements AccountDao {
     @Override
     public long saveAccount(Account account) {
         try {
-            JdbcMapper<Account> mapper = getMapper();
-            mapper.createOrUpdate(account);
+            mapper.createOrUpdate(sessionManager.getCurrentSession().getConnection(), account);
             return account.getNo();
         } catch (DbExecutorException e) {
             logger.error(e.getMessage(), e);
@@ -48,9 +47,5 @@ public class AccountDaoJdbc implements AccountDao {
     @Override
     public SessionManager getSessionManager() {
         return sessionManager;
-    }
-
-    private JdbcMapper<Account> getMapper() {
-        return new JdbcMapperImpl<>(sessionManager.getCurrentSession().getConnection(), Account.class);
     }
 }

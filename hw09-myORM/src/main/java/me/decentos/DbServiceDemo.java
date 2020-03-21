@@ -14,6 +14,8 @@ import me.decentos.jdbc.dao.UserDaoJdbc;
 import me.decentos.jdbc.sessionmanager.SessionManagerJdbc;
 import me.decentos.mapper.AccountMapper;
 import me.decentos.mapper.UserMapper;
+import me.decentos.mapper.jdbc.JdbcMapper;
+import me.decentos.mapper.jdbc.JdbcMapperImpl;
 
 import javax.sql.DataSource;
 import java.math.BigDecimal;
@@ -23,11 +25,13 @@ public class DbServiceDemo {
     public static void main(String[] args) throws SQLException {
         DataSource dataSource = new DataSourceH2();
         SessionManagerJdbc sessionManager = new SessionManagerJdbc(dataSource);
+        JdbcMapper<User> userMapper = new JdbcMapperImpl<>(User.class);
+        JdbcMapper<Account> accountMapper = new JdbcMapperImpl<>(Account.class);
 
         new UserMapper(dataSource).createTable("create table if not exists user(id bigint(20) NOT NULL auto_increment, name varchar(255), age int(3))");
         new AccountMapper(dataSource).createTable("create table if not exists account(no bigint(20) NOT NULL auto_increment, type varchar(255), rest number)");
 
-        UserDao userDao = new UserDaoJdbc(sessionManager);
+        UserDao userDao = new UserDaoJdbc(sessionManager, userMapper);
         DBServiceUser dbServiceUser = new DbServiceUserImpl(userDao);
 
         // создание несуществующих пользователей
@@ -55,7 +59,7 @@ public class DbServiceDemo {
 
         System.out.println("==================================");
 
-        AccountDao accountDao = new AccountDaoJdbc(sessionManager);
+        AccountDao accountDao = new AccountDaoJdbc(sessionManager, accountMapper);
         DBServiceAccount dbServiceAccount = new DbServiceAccountImpl(accountDao);
 
         // создание аккаунта

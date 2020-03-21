@@ -18,15 +18,13 @@ public class JdbcMapperImpl<T> implements JdbcMapper<T> {
     private static Logger logger = LoggerFactory.getLogger(JdbcMapperImpl.class);
 
     private final DbExecutor<T> dbExecutor;
-    private Connection connection;
     private final Class<T> clazz;
     private final String selectStmt;
     private final String insertStmt;
     private final String updateStmt;
 
-    public JdbcMapperImpl(Connection connection, Class<T> clazz) {
+    public JdbcMapperImpl(Class<T> clazz) {
         dbExecutor = new DbExecutor<>();
-        this.connection = connection;
         this.clazz = clazz;
         this.selectStmt = SqlQueryHelper.selectStatementForClass(this.clazz);
         this.insertStmt = SqlQueryHelper.insertStatementForClass(this.clazz);
@@ -34,15 +32,15 @@ public class JdbcMapperImpl<T> implements JdbcMapper<T> {
     }
 
     @Override
-    public void createOrUpdate(T objectData) {
+    public void createOrUpdate(Connection connection, T objectData) {
         try {
             Object idFieldValue = SqlQueryHelper.getIdFieldValue(objectData);
             // полагаем, что работаем только с числами, где значение по умолчанию равно 0
             if (idFieldValue == null) throw new DbExecutorException("Id field can't have null value");
             if ((long) idFieldValue == 0) {
-                create(objectData);
+                create(connection, objectData);
             } else {
-                update(objectData);
+                update(connection, objectData);
             }
         } catch (Exception ex) {
             logger.error(ex.getMessage(), ex);
@@ -51,7 +49,7 @@ public class JdbcMapperImpl<T> implements JdbcMapper<T> {
     }
 
     @Override
-    public void create(T objectData) throws Exception {
+    public void create(Connection connection, T objectData) throws Exception {
         List<String> params = new ArrayList<>();
         List<Field> fields = SqlQueryHelper.getNonIdFields(clazz);
 
@@ -65,7 +63,7 @@ public class JdbcMapperImpl<T> implements JdbcMapper<T> {
     }
 
     @Override
-    public void update(T objectData) throws Exception {
+    public void update(Connection connection, T objectData) throws Exception {
         List<String> params = new ArrayList<>();
         List<Field> fields = SqlQueryHelper.getNonIdFields(clazz);
 
@@ -83,7 +81,7 @@ public class JdbcMapperImpl<T> implements JdbcMapper<T> {
     }
 
     @Override
-    public Optional<T> load(long id, Class<T> clazz) {
+    public Optional<T> load(Connection connection, long id, Class<T> clazz) {
         try {
             return dbExecutor.selectRecord(connection, selectStmt, id,
                     resultSet -> {
