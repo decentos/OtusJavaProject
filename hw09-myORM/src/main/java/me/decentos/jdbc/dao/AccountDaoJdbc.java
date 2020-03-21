@@ -10,6 +10,7 @@ import me.decentos.mapper.jdbc.JdbcMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.sql.Connection;
 import java.util.Optional;
 
 public class AccountDaoJdbc implements AccountDao {
@@ -26,7 +27,7 @@ public class AccountDaoJdbc implements AccountDao {
     @Override
     public Optional<Account> findByNo(long no) {
         try {
-            return mapper.load(sessionManager.getCurrentSession().getConnection(), no, Account.class);
+            return mapper.load(getConnection(), no, Account.class);
         } catch (DbExecutorException e) {
             logger.error(e.getMessage(), e);
         }
@@ -36,7 +37,7 @@ public class AccountDaoJdbc implements AccountDao {
     @Override
     public long saveAccount(Account account) {
         try {
-            mapper.createOrUpdate(sessionManager.getCurrentSession().getConnection(), account);
+            mapper.createOrUpdate(getConnection(), account);
             return account.getNo();
         } catch (DbExecutorException e) {
             logger.error(e.getMessage(), e);
@@ -47,5 +48,9 @@ public class AccountDaoJdbc implements AccountDao {
     @Override
     public SessionManager getSessionManager() {
         return sessionManager;
+    }
+
+    private Connection getConnection() {
+        return sessionManager.getCurrentSession().getConnection();
     }
 }

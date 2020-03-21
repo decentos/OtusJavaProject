@@ -11,6 +11,7 @@ import me.decentos.mapper.jdbc.JdbcMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.sql.Connection;
 import java.util.Optional;
 
 public class UserDaoJdbc implements UserDao {
@@ -27,7 +28,7 @@ public class UserDaoJdbc implements UserDao {
     @Override
     public Optional<User> findById(long id) {
         try {
-            return mapper.load(sessionManager.getCurrentSession().getConnection(), id, User.class);
+            return mapper.load(getConnection(), id, User.class);
         } catch (DbExecutorException e) {
             logger.error(e.getMessage(), e);
         }
@@ -37,7 +38,7 @@ public class UserDaoJdbc implements UserDao {
     @Override
     public long saveUser(User user) {
         try {
-            mapper.createOrUpdate(sessionManager.getCurrentSession().getConnection(), user);
+            mapper.createOrUpdate(getConnection(), user);
             return user.getId();
         } catch (DbExecutorException e) {
             logger.error(e.getMessage(), e);
@@ -50,4 +51,7 @@ public class UserDaoJdbc implements UserDao {
         return sessionManager;
     }
 
+    private Connection getConnection() {
+        return sessionManager.getCurrentSession().getConnection();
+    }
 }
