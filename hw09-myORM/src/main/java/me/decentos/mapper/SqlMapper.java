@@ -8,19 +8,19 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class AccountMapper {
-    private final static Logger logger = LoggerFactory.getLogger(AccountMapper.class);
+public class SqlMapper<T> {
+    private final static Logger logger = LoggerFactory.getLogger(SqlMapper.class);
     private final DataSource dataSource;
 
-    public AccountMapper(DataSource dataSource) {
+    public SqlMapper(DataSource dataSource) {
         this.dataSource = dataSource;
     }
 
-    public void createTable(String createTableSql) throws SQLException {
+    public void createTable(String createTableSql, Class<T> clazz) throws SQLException {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement pst = connection.prepareStatement(createTableSql)) {
             pst.executeUpdate();
         }
-        logger.info("Table for Account created");
+        logger.info("Table for {} created", clazz.getSimpleName());
     }
 }
