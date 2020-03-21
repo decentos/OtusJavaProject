@@ -1,8 +1,8 @@
 package me.decentos.jdbc.dao;
 
 
+import me.decentos.core.dao.DaoException;
 import me.decentos.core.dao.UserDao;
-import me.decentos.core.dao.UserDaoException;
 import me.decentos.core.model.User;
 import me.decentos.core.sessionmanager.SessionManager;
 import me.decentos.jdbc.DbExecutorException;
@@ -42,7 +42,7 @@ public class UserDaoJdbc implements UserDao {
             return user.getId();
         } catch (DbExecutorException e) {
             logger.error(e.getMessage(), e);
-            throw new UserDaoException(e);
+            throw new DaoException(e);
         }
     }
 

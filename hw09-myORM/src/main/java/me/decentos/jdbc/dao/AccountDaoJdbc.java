@@ -1,7 +1,7 @@
 package me.decentos.jdbc.dao;
 
 import me.decentos.core.dao.AccountDao;
-import me.decentos.core.dao.UserDaoException;
+import me.decentos.core.dao.DaoException;
 import me.decentos.core.model.Account;
 import me.decentos.core.sessionmanager.SessionManager;
 import me.decentos.jdbc.DbExecutorException;
@@ -41,7 +41,7 @@ public class AccountDaoJdbc implements AccountDao {
             return account.getNo();
         } catch (DbExecutorException e) {
             logger.error(e.getMessage(), e);
-            throw new UserDaoException(e);
+            throw new DaoException(e);
         }
     }
 
