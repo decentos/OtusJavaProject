@@ -1,8 +1,8 @@
 package me.decentos.core.model;
 
-import javax.persistence.Id;
 import javax.persistence.*;
-import java.util.Objects;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -15,13 +15,19 @@ public class User {
 
     @Column(name = "name")
     private String name;
-    private int age;
+
+    @ManyToOne(targetEntity = AddressDataSet.class, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JoinColumn(name = "address_id")
+    private AddressDataSet address;
+
+    @OneToMany(targetEntity = PhoneDataSet.class, cascade = {CascadeType.MERGE, CascadeType.PERSIST}, orphanRemoval = true)
+    @JoinColumn(name = "user_id", nullable = false)
+    private Set<PhoneDataSet> phones = new HashSet<>();
 
     public User() {
     }
 
-    public User(long id, String name) {
-        this.id = id;
+    public User(String name) {
         this.name = name;
     }
 
@@ -33,16 +39,28 @@ public class User {
         return name;
     }
 
+    public AddressDataSet getAddress() {
+        return address;
+    }
+
+    public Set<PhoneDataSet> getPhones() {
+        return phones;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
 
-    public int getAge() {
-        return age;
+    public void setAddress(AddressDataSet address) {
+        this.address = address;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public void addPhone(PhoneDataSet phone) {
+        this.phones.add(phone);
+    }
+
+    public void removePhone(PhoneDataSet phone) {
+        this.phones.remove(phone);
     }
 
     @Override
@@ -50,27 +68,8 @@ public class User {
         return "User{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", age=" + age +
+                ", address=" + address +
+                ", phones=" + phones +
                 '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        User user = (User) o;
-
-        if (id != user.id) return false;
-        if (age != user.age) return false;
-        return Objects.equals(name, user.name);
-    }
-
-    @Override
-    public int hashCode() {
-        int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + age;
-        return result;
     }
 }
