@@ -16,11 +16,11 @@ public class User {
     @Column(name = "name")
     private String name;
 
-    @ManyToOne(targetEntity = AddressDataSet.class, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @OneToOne(targetEntity = AddressDataSet.class, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "address_id")
     private AddressDataSet address;
 
-    @OneToMany(targetEntity = PhoneDataSet.class, cascade = {CascadeType.MERGE, CascadeType.PERSIST}, orphanRemoval = true)
+    @OneToMany(targetEntity = PhoneDataSet.class, cascade = {CascadeType.MERGE, CascadeType.PERSIST}, orphanRemoval = true, fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
     private Set<PhoneDataSet> phones = new HashSet<>();
 
