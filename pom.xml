@@ -26,6 +26,7 @@
         <module>hw08-myJsonWriter</module>
         <module>hw09-myORM</module>
         <module>hw10-hibernate</module>
+        <module>hw11-myCache</module>
     </modules>
 
     <properties>
