@@ -16,7 +16,7 @@ public class MyCacheDemo {
         // пример, когда Idea предлагает упростить код, при этом может появиться "спец"-эффект
         Listener<Integer, Integer> listener = new Listener<>() {
             @Override
-            public void notify(Integer key, Integer value, String action) {
+            public void notify(Integer key, Integer value, CacheAction action) {
                 logger.info("key:{}, value:{}, action: {}", key, value, action);
             }
         };
