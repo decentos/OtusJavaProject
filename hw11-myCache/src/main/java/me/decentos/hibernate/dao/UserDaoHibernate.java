@@ -14,46 +14,46 @@ import org.slf4j.LoggerFactory;
 import java.util.Optional;
 
 public class UserDaoHibernate implements UserDao {
-  private static Logger logger = LoggerFactory.getLogger(UserDaoHibernate.class);
+    private static Logger logger = LoggerFactory.getLogger(UserDaoHibernate.class);
 
-  private final SessionManagerHibernate sessionManager;
+    private final SessionManagerHibernate sessionManager;
 
-  public UserDaoHibernate(SessionManagerHibernate sessionManager) {
-    this.sessionManager = sessionManager;
-  }
-
-
-  @Override
-  public Optional<User> findById(long id) {
-    DatabaseSessionHibernate currentSession = sessionManager.getCurrentSession();
-    try {
-      return Optional.ofNullable(currentSession.getHibernateSession().find(User.class, id));
-    } catch (Exception e) {
-      logger.error(e.getMessage(), e);
+    public UserDaoHibernate(SessionManagerHibernate sessionManager) {
+        this.sessionManager = sessionManager;
     }
-    return Optional.empty();
-  }
 
 
-  @Override
-  public long saveUser(User user) {
-    DatabaseSessionHibernate currentSession = sessionManager.getCurrentSession();
-    try {
-      Session hibernateSession = currentSession.getHibernateSession();
-      if (user.getId() > 0) {
-        hibernateSession.merge(user);
-      } else {
-        hibernateSession.persist(user);
-      }
-      return user.getId();
-    } catch (Exception e) {
-      logger.error(e.getMessage(), e);
-      throw new DaoException(e);
+    @Override
+    public Optional<User> findById(long id) {
+        DatabaseSessionHibernate currentSession = sessionManager.getCurrentSession();
+        try {
+            return Optional.ofNullable(currentSession.getHibernateSession().find(User.class, id));
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+        }
+        return Optional.empty();
     }
-  }
 
-  @Override
-  public SessionManager getSessionManager() {
-    return sessionManager;
-  }
+
+    @Override
+    public long saveUser(User user) {
+        DatabaseSessionHibernate currentSession = sessionManager.getCurrentSession();
+        try {
+            Session hibernateSession = currentSession.getHibernateSession();
+            if (user.getId() > 0) {
+                hibernateSession.merge(user);
+            } else {
+                hibernateSession.persist(user);
+            }
+            return user.getId();
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            throw new DaoException(e);
+        }
+    }
+
+    @Override
+    public SessionManager getSessionManager() {
+        return sessionManager;
+    }
 }
