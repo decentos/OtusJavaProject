@@ -1,11 +1,13 @@
 package me.decentos;
 
+import me.decentos.core.cache.UserCache;
+import me.decentos.core.cache.UserCacheImpl;
 import me.decentos.core.dao.UserDao;
 import me.decentos.core.model.AddressDataSet;
 import me.decentos.core.model.PhoneDataSet;
 import me.decentos.core.model.User;
 import me.decentos.core.service.DBServiceUser;
-import me.decentos.core.service.DbServiceUserImpl;
+import me.decentos.core.service.DbCachedServiceUserImpl;
 import me.decentos.hibernate.HibernateUtils;
 import me.decentos.hibernate.dao.UserDaoHibernate;
 import me.decentos.hibernate.sessionmanager.SessionManagerHibernate;
@@ -23,7 +25,8 @@ public class HibernateDemo {
 
         SessionManagerHibernate sessionManager = new SessionManagerHibernate(sessionFactory);
         UserDao userDao = new UserDaoHibernate(sessionManager);
-        DBServiceUser dbServiceUser = new DbServiceUserImpl(userDao);
+        UserCache cache = new UserCacheImpl();
+        DBServiceUser dbServiceUser = new DbCachedServiceUserImpl(userDao, cache);
 
         User user = new User("Тестовый");
         AddressDataSet address = new AddressDataSet("Тестовая улица");
