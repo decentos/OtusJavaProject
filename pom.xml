@@ -27,6 +27,7 @@
         <module>hw09-myORM</module>
         <module>hw10-hibernate</module>
         <module>hw11-myCache</module>
+        <module>hw12-webApp</module>
     </modules>
 
     <properties>
