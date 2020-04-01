@@ -26,8 +26,8 @@ public class DbCachedServiceUserImpl implements DBServiceUser {
             sessionManager.beginSession();
             try {
                 long userId = userDao.saveUser(user);
-                cache.add(user);
                 sessionManager.commitSession();
+                cache.add(user);
 
                 logger.info("saved user: {}", userId);
                 return userId;
@@ -39,13 +39,16 @@ public class DbCachedServiceUserImpl implements DBServiceUser {
         }
     }
 
-
     @Override
     public Optional<User> getUser(long id) {
         try (SessionManager sessionManager = userDao.getSessionManager()) {
             sessionManager.beginSession();
             try {
-                Optional<User> userOptional = cache.get(id).or(() -> userDao.findById(id));
+                Optional<User> userOptional = cache.get(id).or(() -> {
+                    var user = userDao.findById(id);
+                    user.ifPresent(cache::add);
+                    return user;
+                });
 
                 logger.info("loaded user: {}", userOptional.orElse(null));
                 return userOptional;

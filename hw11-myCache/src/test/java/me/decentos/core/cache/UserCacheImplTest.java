@@ -2,6 +2,8 @@ package me.decentos.core.cache;
 
 import me.decentos.cache.CacheAction;
 import me.decentos.cache.Listener;
+import me.decentos.cache.MyCache;
+import me.decentos.cache.MyCacheImpl;
 import me.decentos.core.model.AddressDataSet;
 import me.decentos.core.model.User;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,10 +20,12 @@ class UserCacheImplTest {
 
     private UserCache cache;
     private User user;
+    private MyCache<String, User> myCache;
 
     @BeforeEach
     void setUp() {
-        cache = new UserCacheImpl();
+        myCache = new MyCacheImpl<>();
+        cache = new UserCacheImpl(myCache);
 
         user = new User("Ivan");
         user.setAddress(new AddressDataSet("Lenina"));

@@ -2,13 +2,16 @@ package me.decentos.core.cache;
 
 import me.decentos.cache.Listener;
 import me.decentos.cache.MyCache;
-import me.decentos.cache.MyCacheImpl;
 import me.decentos.core.model.User;
 
 import java.util.Optional;
 
 public class UserCacheImpl implements UserCache {
-    private final MyCache<String, User> cache = new MyCacheImpl<>();
+    private final MyCache<String, User> cache;
+
+    public UserCacheImpl(MyCache<String, User> cache) {
+        this.cache = cache;
+    }
 
     @Override
     public void add(User user) {

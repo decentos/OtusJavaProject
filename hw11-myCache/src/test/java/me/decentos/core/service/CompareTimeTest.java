@@ -1,5 +1,7 @@
 package me.decentos.core.service;
 
+import me.decentos.cache.MyCache;
+import me.decentos.cache.MyCacheImpl;
 import me.decentos.core.cache.UserCacheImpl;
 import me.decentos.core.model.AddressDataSet;
 import me.decentos.core.model.PhoneDataSet;
@@ -30,6 +32,7 @@ public class CompareTimeTest {
 
     private DBServiceUser userService;
     private DBServiceUser cachedUserService;
+    private MyCache<String, User> myCache;
 
     @Setup
     public void setup() throws Exception {
@@ -37,7 +40,8 @@ public class CompareTimeTest {
                 User.class, AddressDataSet.class, PhoneDataSet.class);
         var sessionManager = new SessionManagerHibernate(sessionFactory);
         var userDao = new UserDaoHibernate(sessionManager);
-        var userCache = new UserCacheImpl();
+        myCache = new MyCacheImpl<>();
+        var userCache = new UserCacheImpl(myCache);
 
         userService = new DbServiceUserImpl(userDao);
         cachedUserService = new DbCachedServiceUserImpl(userDao, userCache);

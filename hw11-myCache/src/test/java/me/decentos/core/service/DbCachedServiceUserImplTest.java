@@ -1,5 +1,7 @@
 package me.decentos.core.service;
 
+import me.decentos.cache.MyCache;
+import me.decentos.cache.MyCacheImpl;
 import me.decentos.core.cache.UserCache;
 import me.decentos.core.cache.UserCacheImpl;
 import me.decentos.core.dao.UserDao;
@@ -33,6 +35,7 @@ class DbCachedServiceUserImplTest {
     private SessionFactory sessionFactory;
     private SessionManagerHibernate sessionManager;
     private UserDao userDao;
+    private MyCache<String, User> myCache;
     private UserCache userCache;
     private DBServiceUser userService;
 
@@ -42,7 +45,8 @@ class DbCachedServiceUserImplTest {
                 User.class, AddressDataSet.class, PhoneDataSet.class);
         sessionManager = new SessionManagerHibernate(sessionFactory);
         userDao = new UserDaoHibernate(sessionManager);
-        userCache = new UserCacheImpl();
+        myCache = new MyCacheImpl<>();
+        userCache = new UserCacheImpl(myCache);
         userService = new DbCachedServiceUserImpl(userDao, userCache);
 
         user = new User("Иван");

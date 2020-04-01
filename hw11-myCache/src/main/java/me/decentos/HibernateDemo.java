@@ -1,5 +1,7 @@
 package me.decentos;
 
+import me.decentos.cache.MyCache;
+import me.decentos.cache.MyCacheImpl;
 import me.decentos.core.cache.UserCache;
 import me.decentos.core.cache.UserCacheImpl;
 import me.decentos.core.dao.UserDao;
@@ -25,8 +27,9 @@ public class HibernateDemo {
 
         SessionManagerHibernate sessionManager = new SessionManagerHibernate(sessionFactory);
         UserDao userDao = new UserDaoHibernate(sessionManager);
-        UserCache cache = new UserCacheImpl();
-        DBServiceUser dbServiceUser = new DbCachedServiceUserImpl(userDao, cache);
+        MyCache<String, User> myCache = new MyCacheImpl<>();
+        UserCache userCache = new UserCacheImpl(myCache);
+        DBServiceUser dbServiceUser = new DbCachedServiceUserImpl(userDao, userCache);
 
         User user = new User("Тестовый");
         AddressDataSet address = new AddressDataSet("Тестовая улица");
