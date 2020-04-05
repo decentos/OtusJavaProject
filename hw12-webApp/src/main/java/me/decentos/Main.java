@@ -1,5 +1,7 @@
 package me.decentos;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import me.decentos.core.dao.UserDao;
 import me.decentos.core.model.AddressDataSet;
 import me.decentos.core.model.PhoneDataSet;
@@ -9,53 +11,56 @@ import me.decentos.core.service.UserServiceImpl;
 import me.decentos.hibernate.HibernateUtils;
 import me.decentos.hibernate.dao.UserDaoHibernate;
 import me.decentos.hibernate.sessionmanager.SessionManagerHibernate;
+import me.decentos.web.server.UsersWebServer;
+import me.decentos.web.server.UsersWebServerImpl;
+import me.decentos.web.services.*;
+import org.eclipse.jetty.security.LoginService;
 import org.hibernate.SessionFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import java.util.Optional;
+import static me.decentos.web.server.SecurityType.FILTER_BASED;
 
 public class Main {
-    private static Logger logger = LoggerFactory.getLogger(Main.class);
+    private static final int WEB_SERVER_PORT = 8080;
+    private static final String TEMPLATES_DIR = "/templates/";
+    private static final String HIBERNATE_CFG_XML_FILE_RESOURCE = "hibernate.cfg.xml";
 
-    public static void main(String[] args) {
-        SessionFactory sessionFactory = HibernateUtils.buildSessionFactory("hibernate.cfg.xml", User.class, AddressDataSet.class, PhoneDataSet.class);
-
+    public static void main(String[] args) throws Exception {
+        // hibernate
+        SessionFactory sessionFactory = HibernateUtils.buildSessionFactory(HIBERNATE_CFG_XML_FILE_RESOURCE,
+                User.class, AddressDataSet.class, PhoneDataSet.class);
         SessionManagerHibernate sessionManager = new SessionManagerHibernate(sessionFactory);
+
+        // DAO and business layer services
         UserDao userDao = new UserDaoHibernate(sessionManager);
         UserService userService = new UserServiceImpl(userDao);
 
-        User user = new User("Тестовый");
-        AddressDataSet address = new AddressDataSet("Тестовая улица");
-        PhoneDataSet phone1 = new PhoneDataSet("+7-999-555-33-11");
-        PhoneDataSet phone2 = new PhoneDataSet("+7-666-000-77-88");
+        // Web services
+        UserAuthService userAuthServiceForFilterBasedSecurity = new UserAuthServiceImpl(userService);
+        LoginService loginServiceForBasicSecurity = new InMemoryLoginServiceImpl(userService);
 
-        user.setAddress(address);
-        user.addPhone(phone1);
-        user.addPhone(phone2);
+        // Other
+        Gson gson = new GsonBuilder().serializeNulls().setPrettyPrinting().create();
+        TemplateProcessor templateProcessor = new TemplateProcessorImpl(TEMPLATES_DIR);
+        createAdminUser(userService);
 
-        long id = userService.saveUser(user);
-        Optional<User> mayBeCreatedUser = userService.getUser(id);
+        UsersWebServer usersWebServer = new UsersWebServerImpl(WEB_SERVER_PORT,
+                FILTER_BASED,
+                userAuthServiceForFilterBasedSecurity,
+                loginServiceForBasicSecurity,
+                userService,
+                gson,
+                templateProcessor);
 
-        user = new User("Новый тест");
-        address = new AddressDataSet("Новая улица");
-        phone1 = new PhoneDataSet("+7-555-333-00-00");
-        phone2 = new PhoneDataSet("+7-444-999-11-11");
-
-        user.setAddress(address);
-        user.addPhone(phone1);
-        user.addPhone(phone2);
-
-        id = userService.saveUser(user);
-        Optional<User> mayBeUpdatedUser = userService.getUser(id);
-
-        outputUserOptional("Created user", mayBeCreatedUser);
-        outputUserOptional("Updated user", mayBeUpdatedUser);
+        usersWebServer.start();
+        usersWebServer.join();
     }
 
-    private static void outputUserOptional(String header, Optional<User> mayBeUser) {
-        System.out.println("-----------------------------------------------------------");
-        System.out.println(header);
-        mayBeUser.ifPresentOrElse(System.out::println, () -> logger.info("User not found"));
+    private static void createAdminUser(UserService userService) {
+        User admin = new User("Admin");
+        admin.setLogin("admin");
+        admin.setPassword("admin");
+        admin.setAdmin(true);
+
+        userService.saveUser(admin);
     }
 }
