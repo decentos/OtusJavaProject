@@ -15,8 +15,8 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Optional;
 
-public class HibernateDemo {
-    private static Logger logger = LoggerFactory.getLogger(HibernateDemo.class);
+public class Main {
+    private static Logger logger = LoggerFactory.getLogger(Main.class);
 
     public static void main(String[] args) {
         SessionFactory sessionFactory = HibernateUtils.buildSessionFactory("hibernate.cfg.xml", User.class, AddressDataSet.class, PhoneDataSet.class);

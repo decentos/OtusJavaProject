@@ -1,19 +1,19 @@
 package me.decentos.web.services;
 
-import me.decentos.web.dao.UserDao;
+import me.decentos.core.service.DBServiceUser;
 
 public class UserAuthServiceImpl implements UserAuthService {
 
-    private final UserDao userDao;
+    private final DBServiceUser userService;
 
-    public UserAuthServiceImpl(UserDao userDao) {
-        this.userDao = userDao;
+    public UserAuthServiceImpl(DBServiceUser userService) {
+        this.userService = userService;
     }
 
     @Override
     public boolean authenticate(String login, String password) {
-        return userDao.findByLogin(login)
-                .map(user -> user.getPassword().equals(password))
+        return userService.getUser(login)
+                .map(user -> user.getPassword().equals(password) && user.getAdmin())
                 .orElse(false);
     }
 
