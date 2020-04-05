@@ -9,12 +9,12 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 import java.util.Optional;
 
-public class ServiceUserImpl implements ServiceUser {
-    private static Logger logger = LoggerFactory.getLogger(ServiceUserImpl.class);
+public class UserServiceImpl implements UserService {
+    private static Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
     private final UserDao userDao;
 
-    public ServiceUserImpl(UserDao userDao) {
+    public UserServiceImpl(UserDao userDao) {
         this.userDao = userDao;
     }
 
