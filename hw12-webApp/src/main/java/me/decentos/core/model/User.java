@@ -16,6 +16,15 @@ public class User {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "login", unique = true, nullable = false)
+    private String login;
+
+    @Column(name = "password", nullable = false)
+    private String password;
+
+    @Column(name = "is_admin", nullable = false)
+    private Boolean isAdmin = false;
+
     @OneToOne(targetEntity = AddressDataSet.class, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "address_id")
     private AddressDataSet address;
@@ -37,6 +46,30 @@ public class User {
 
     public String getName() {
         return name;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Boolean getAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(Boolean admin) {
+        isAdmin = admin;
     }
 
     public AddressDataSet getAddress() {

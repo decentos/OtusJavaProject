@@ -6,6 +6,7 @@ import me.decentos.core.sessionmanager.SessionManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.List;
 import java.util.Optional;
 
 public class DbServiceUserImpl implements DBServiceUser {
@@ -50,6 +51,31 @@ public class DbServiceUserImpl implements DBServiceUser {
                 sessionManager.rollbackSession();
             }
             return Optional.empty();
+        }
+    }
+
+    @Override
+    public Optional<User> getUser(String login) {
+        try (SessionManager sessionManager = userDao.getSessionManager()) {
+            sessionManager.beginSession();
+            try {
+                Optional<User> userOptional = userDao.findByLogin(login);
+
+                logger.info("loaded user by login: {}", userOptional.orElse(null));
+                return userOptional;
+            } catch (Exception e) {
+                sessionManager.rollbackSession();
+                logger.error(e.getMessage(), e);
+            }
+            return Optional.empty();
+        }
+    }
+
+    @Override
+    public List<User> getAll() {
+        try (SessionManager sessionManager = userDao.getSessionManager()) {
+            sessionManager.beginSession();
+            return userDao.getAll();
         }
     }
 
