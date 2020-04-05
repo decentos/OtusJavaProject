@@ -9,12 +9,12 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 import java.util.Optional;
 
-public class DbServiceUserImpl implements DBServiceUser {
-    private static Logger logger = LoggerFactory.getLogger(DbServiceUserImpl.class);
+public class ServiceUserImpl implements ServiceUser {
+    private static Logger logger = LoggerFactory.getLogger(ServiceUserImpl.class);
 
     private final UserDao userDao;
 
-    public DbServiceUserImpl(UserDao userDao) {
+    public ServiceUserImpl(UserDao userDao) {
         this.userDao = userDao;
     }
 
@@ -31,7 +31,7 @@ public class DbServiceUserImpl implements DBServiceUser {
             } catch (Exception e) {
                 logger.error(e.getMessage(), e);
                 sessionManager.rollbackSession();
-                throw new DbServiceException(e);
+                throw new ServiceException(e);
             }
         }
     }

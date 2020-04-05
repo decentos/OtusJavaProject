@@ -1,12 +1,12 @@
 package me.decentos.web.services;
 
-import me.decentos.core.service.DBServiceUser;
+import me.decentos.core.service.ServiceUser;
 
 public class UserAuthServiceImpl implements UserAuthService {
 
-    private final DBServiceUser userService;
+    private final ServiceUser userService;
 
-    public UserAuthServiceImpl(DBServiceUser userService) {
+    public UserAuthServiceImpl(ServiceUser userService) {
         this.userService = userService;
     }
 

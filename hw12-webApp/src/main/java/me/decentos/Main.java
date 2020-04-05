@@ -4,8 +4,8 @@ import me.decentos.core.dao.UserDao;
 import me.decentos.core.model.AddressDataSet;
 import me.decentos.core.model.PhoneDataSet;
 import me.decentos.core.model.User;
-import me.decentos.core.service.DBServiceUser;
-import me.decentos.core.service.DbServiceUserImpl;
+import me.decentos.core.service.ServiceUser;
+import me.decentos.core.service.ServiceUserImpl;
 import me.decentos.hibernate.HibernateUtils;
 import me.decentos.hibernate.dao.UserDaoHibernate;
 import me.decentos.hibernate.sessionmanager.SessionManagerHibernate;
@@ -23,7 +23,7 @@ public class Main {
 
         SessionManagerHibernate sessionManager = new SessionManagerHibernate(sessionFactory);
         UserDao userDao = new UserDaoHibernate(sessionManager);
-        DBServiceUser dbServiceUser = new DbServiceUserImpl(userDao);
+        ServiceUser serviceUser = new ServiceUserImpl(userDao);
 
         User user = new User("Тестовый");
         AddressDataSet address = new AddressDataSet("Тестовая улица");
@@ -34,8 +34,8 @@ public class Main {
         user.addPhone(phone1);
         user.addPhone(phone2);
 
-        long id = dbServiceUser.saveUser(user);
-        Optional<User> mayBeCreatedUser = dbServiceUser.getUser(id);
+        long id = serviceUser.saveUser(user);
+        Optional<User> mayBeCreatedUser = serviceUser.getUser(id);
 
         user = new User("Новый тест");
         address = new AddressDataSet("Новая улица");
@@ -46,8 +46,8 @@ public class Main {
         user.addPhone(phone1);
         user.addPhone(phone2);
 
-        id = dbServiceUser.saveUser(user);
-        Optional<User> mayBeUpdatedUser = dbServiceUser.getUser(id);
+        id = serviceUser.saveUser(user);
+        Optional<User> mayBeUpdatedUser = serviceUser.getUser(id);
 
         outputUserOptional("Created user", mayBeCreatedUser);
         outputUserOptional("Updated user", mayBeUpdatedUser);
