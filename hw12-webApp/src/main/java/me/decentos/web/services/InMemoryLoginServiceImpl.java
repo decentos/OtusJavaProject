@@ -17,7 +17,7 @@ public class InMemoryLoginServiceImpl extends AbstractLoginService {
 
     @Override
     protected String[] loadRoleInfo(UserPrincipal userPrincipal) {
-        return new String[] {"user"};
+        return new String[]{"user"};
     }
 
     @Override
