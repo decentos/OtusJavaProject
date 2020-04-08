@@ -27,6 +27,7 @@
         <module>hw09-myORM</module>
         <module>hw10-hibernate</module>
         <module>hw11-myCache</module>
+        <module>hw12-webApp</module>
     </modules>
 
     <properties>
@@ -41,6 +42,8 @@
         <org.junit.jupiter.version>5.6.0</org.junit.jupiter.version>
         <org.assertj.version>3.15.0</org.assertj.version>
         <jmh-core.version>1.21</jmh-core.version>
+        <freemarker.version>2.3.28</freemarker.version>
+        <jetty.version>9.4.27.v20200227</jetty.version>
     </properties>
 
     <dependencyManagement>
@@ -93,6 +96,26 @@
                 <artifactId>jmh-generator-annprocess</artifactId>
                 <version>${jmh-core.version}</version>
                 <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.freemarker</groupId>
+                <artifactId>freemarker</artifactId>
+                <version>${freemarker.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-server</artifactId>
+                <version>${jetty.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-webapp</artifactId>
+                <version>${jetty.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-security</artifactId>
+                <version>${jetty.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
