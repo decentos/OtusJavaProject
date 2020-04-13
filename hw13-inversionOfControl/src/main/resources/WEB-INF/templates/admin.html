@@ -22,9 +22,9 @@
             fetch('api/user/', {
                   method: 'POST',
                   headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
+                    'Content-Type': 'application/json;charset=utf-8'
                   },
-                  body: new URLSearchParams(new FormData(form))
+                  body: extractUserJson(form)
                 }).then(res => {
                     if (res.status >= 500) {
                         alert('Ошибка при создании пользователя');
@@ -56,7 +56,7 @@
 </head>
 
 <body>
-<a href="/logout">Выйти</a>
+<a href="logout">Выйти</a>
 <br/>
 <h1>Создание нового пользователя:</h1>
 <form onsubmit="createNewUser(this); return false;" action="#" autocomplete="off">
