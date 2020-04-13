@@ -1,6 +1,6 @@
 package me.decentos.web.services;
 
-import me.decentos.core.dao.UserRepository;
+import me.decentos.core.repository.UserRepository;
 import me.decentos.core.sessionmanager.SessionManager;
 import org.springframework.stereotype.Service;
 

@@ -1,7 +1,7 @@
 package me.decentos.core.service;
 
-import me.decentos.core.dao.UserRepository;
 import me.decentos.core.model.User;
+import me.decentos.core.repository.UserRepository;
 import me.decentos.core.sessionmanager.SessionManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

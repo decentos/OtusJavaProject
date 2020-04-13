@@ -1,9 +1,9 @@
 package me.decentos.hibernate.dao;
 
 
-import me.decentos.core.dao.UserRepository;
-import me.decentos.core.dao.UserRepositoryException;
 import me.decentos.core.model.User;
+import me.decentos.core.repository.UserRepository;
+import me.decentos.core.repository.UserRepositoryException;
 import me.decentos.core.sessionmanager.SessionManager;
 import me.decentos.hibernate.sessionmanager.DatabaseSessionHibernate;
 import me.decentos.hibernate.sessionmanager.SessionManagerHibernate;

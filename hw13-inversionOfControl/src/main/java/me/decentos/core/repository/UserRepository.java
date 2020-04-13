@@ -1,4 +1,4 @@
-package me.decentos.core.dao;
+package me.decentos.core.repository;
 
 import me.decentos.core.model.User;
 import me.decentos.core.sessionmanager.SessionManager;

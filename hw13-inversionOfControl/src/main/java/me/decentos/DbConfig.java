@@ -5,6 +5,7 @@ import me.decentos.core.model.PhoneDataSet;
 import me.decentos.core.model.User;
 import me.decentos.core.service.UserService;
 import me.decentos.hibernate.HibernateUtils;
+import me.decentos.web.startup.AdminUserCreator;
 import org.hibernate.SessionFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
