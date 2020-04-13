@@ -1,8 +1,8 @@
 package me.decentos.hibernate.dao;
 
 
-import me.decentos.core.dao.DaoException;
-import me.decentos.core.dao.UserDao;
+import me.decentos.core.dao.UserRepository;
+import me.decentos.core.dao.UserRepositoryException;
 import me.decentos.core.model.User;
 import me.decentos.core.sessionmanager.SessionManager;
 import me.decentos.hibernate.sessionmanager.DatabaseSessionHibernate;
@@ -16,12 +16,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class UserDaoHibernate implements UserDao {
-    private static Logger logger = LoggerFactory.getLogger(UserDaoHibernate.class);
+public class UserRepositoryHibernate implements UserRepository {
+    private static Logger logger = LoggerFactory.getLogger(UserRepositoryHibernate.class);
 
     private final SessionManagerHibernate sessionManager;
 
-    public UserDaoHibernate(SessionManagerHibernate sessionManager) {
+    public UserRepositoryHibernate(SessionManagerHibernate sessionManager) {
         this.sessionManager = sessionManager;
     }
 
@@ -76,7 +76,7 @@ public class UserDaoHibernate implements UserDao {
             return user.getId();
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
-            throw new DaoException(e);
+            throw new UserRepositoryException(e);
         }
     }
 

@@ -1,6 +1,6 @@
 package me.decentos.core.service;
 
-import me.decentos.core.dao.UserDao;
+import me.decentos.core.dao.UserRepository;
 import me.decentos.core.model.User;
 import me.decentos.core.sessionmanager.SessionManager;
 import org.slf4j.Logger;
@@ -12,18 +12,18 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
     private static Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
-    private final UserDao userDao;
+    private final UserRepository userRepository;
 
-    public UserServiceImpl(UserDao userDao) {
-        this.userDao = userDao;
+    public UserServiceImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
     @Override
     public long saveUser(User user) {
-        try (SessionManager sessionManager = userDao.getSessionManager()) {
+        try (SessionManager sessionManager = userRepository.getSessionManager()) {
             sessionManager.beginSession();
             try {
-                long userId = userDao.saveUser(user);
+                long userId = userRepository.saveUser(user);
                 sessionManager.commitSession();
 
                 logger.info("saved user: {}", userId);
@@ -39,10 +39,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> getUser(long id) {
-        try (SessionManager sessionManager = userDao.getSessionManager()) {
+        try (SessionManager sessionManager = userRepository.getSessionManager()) {
             sessionManager.beginSession();
             try {
-                Optional<User> userOptional = userDao.findById(id);
+                Optional<User> userOptional = userRepository.findById(id);
 
                 logger.info("loaded user: {}", userOptional.orElse(null));
                 return userOptional;
@@ -56,10 +56,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> getUser(String login) {
-        try (SessionManager sessionManager = userDao.getSessionManager()) {
+        try (SessionManager sessionManager = userRepository.getSessionManager()) {
             sessionManager.beginSession();
             try {
-                Optional<User> userOptional = userDao.findByLogin(login);
+                Optional<User> userOptional = userRepository.findByLogin(login);
 
                 logger.info("loaded user by login: {}", userOptional.orElse(null));
                 return userOptional;
@@ -73,9 +73,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getAll() {
-        try (SessionManager sessionManager = userDao.getSessionManager()) {
+        try (SessionManager sessionManager = userRepository.getSessionManager()) {
             sessionManager.beginSession();
-            return userDao.getAll();
+            return userRepository.getAll();
         }
     }
 

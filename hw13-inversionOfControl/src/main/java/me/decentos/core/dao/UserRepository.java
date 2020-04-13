@@ -6,7 +6,7 @@ import me.decentos.core.sessionmanager.SessionManager;
 import java.util.List;
 import java.util.Optional;
 
-public interface UserDao {
+public interface UserRepository {
     List<User> getAll();
 
     Optional<User> findByLogin(String login);

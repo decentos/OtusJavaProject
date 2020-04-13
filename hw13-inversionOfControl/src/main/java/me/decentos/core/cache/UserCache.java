@@ -6,6 +6,8 @@ import me.decentos.core.model.User;
 import java.util.Optional;
 
 public interface UserCache {
+    String NAME = "userCache";
+
     void add(User user);
 
     Optional<User> get(long id);
