@@ -1,21 +1,26 @@
 package me.decentos.core.service;
 
+import me.decentos.core.cache.UserCache;
 import me.decentos.core.model.User;
 import me.decentos.core.repository.UserRepository;
 import me.decentos.core.sessionmanager.SessionManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class UserServiceImpl implements UserService {
     private static Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
     private final UserRepository userRepository;
+    private final UserCache cache;
 
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, UserCache cache) {
         this.userRepository = userRepository;
+        this.cache = cache;
     }
 
     @Override
@@ -25,6 +30,7 @@ public class UserServiceImpl implements UserService {
             try {
                 long userId = userRepository.saveUser(user);
                 sessionManager.commitSession();
+                cache.add(user);
 
                 logger.info("saved user: {}", userId);
                 return userId;
@@ -42,7 +48,11 @@ public class UserServiceImpl implements UserService {
         try (SessionManager sessionManager = userRepository.getSessionManager()) {
             sessionManager.beginSession();
             try {
-                Optional<User> userOptional = userRepository.findById(id);
+                Optional<User> userOptional = cache.get(id).or(() -> {
+                    var user = userRepository.findById(id);
+                    user.ifPresent(cache::add);
+                    return user;
+                });
 
                 logger.info("loaded user: {}", userOptional.orElse(null));
                 return userOptional;

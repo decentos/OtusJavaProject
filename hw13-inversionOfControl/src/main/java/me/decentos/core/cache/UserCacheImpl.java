@@ -3,9 +3,11 @@ package me.decentos.core.cache;
 import me.decentos.cache.Listener;
 import me.decentos.cache.MyCache;
 import me.decentos.core.model.User;
+import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
+@Component(UserCache.NAME)
 public class UserCacheImpl implements UserCache {
     private final MyCache<String, User> cache;
 
