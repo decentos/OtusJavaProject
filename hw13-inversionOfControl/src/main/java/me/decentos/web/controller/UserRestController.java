@@ -22,12 +22,12 @@ public class UserRestController {
     }
 
     @GetMapping("/api/user")
-    public List<UserDto> allUsers() {
+    public List<UserDto> findAllUsers() {
         return userService.getAll().stream().map(UserDto::new).collect(Collectors.toList());
     }
 
     @GetMapping("/api/user/{id}")
-    public UserDto user(@PathVariable("id") String id) {
+    public UserDto findUserById(@PathVariable("id") String id) {
         return new UserDto(userService.getUser(id).orElse(null));
     }
 

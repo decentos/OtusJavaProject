@@ -9,11 +9,9 @@ import me.decentos.web.startup.AdminUserCreator;
 import org.hibernate.SessionFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ComponentScan
 public class DbConfig {
     private static final String HIBERNATE_CFG_XML_FILE_RESOURCE = "/WEB-INF/config/hibernate.cfg.xml";
 
@@ -30,8 +28,7 @@ public class DbConfig {
     }
 
     @Bean(initMethod = "createDefaultAdminUser")
-    public AdminUserCreator adminUserCreator() {
-        UserService userService = applicationContext.getBean(UserService.class);
+    public AdminUserCreator adminUserCreator(UserService userService) {
         return new AdminUserCreator(userService);
     }
 }
