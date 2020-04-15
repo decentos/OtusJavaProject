@@ -7,19 +7,12 @@ import me.decentos.core.service.UserService;
 import me.decentos.hibernate.HibernateUtils;
 import me.decentos.web.startup.AdminUserCreator;
 import org.hibernate.SessionFactory;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class DbConfig {
     private static final String HIBERNATE_CFG_XML_FILE_RESOURCE = "/WEB-INF/config/hibernate.cfg.xml";
-
-    private final ApplicationContext applicationContext;
-
-    public DbConfig(ApplicationContext applicationContext) {
-        this.applicationContext = applicationContext;
-    }
 
     @Bean
     public SessionFactory sessionFactory() {
