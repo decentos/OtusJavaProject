@@ -5,6 +5,7 @@ import lombok.SneakyThrows;
 public class StartSequence {
     private int count = 1;
     private static final int LIMIT = 10;
+    private boolean wakeUp = false;
 
     public static void main(String[] args) {
         StartSequence sequence = new StartSequence();
@@ -26,15 +27,21 @@ public class StartSequence {
     @SneakyThrows
     private synchronized void startSeq1() {
         for (int i = 0; i < LIMIT; i++) {
-            System.out.println(count);
-            wait();
-            count++;
+            if (!wakeUp) {
+                System.out.println(count);
+                wait();
+                count++;
+            }
+            wakeUp = false;
             notify();
         }
         for (int i = 0; i < LIMIT - 1; i++) {
-            count--;
-            System.out.println(count - 1);
-            wait();
+            if (!wakeUp) {
+                count--;
+                System.out.println(count - 1);
+                wait();
+            }
+            wakeUp = false;
             notify();
         }
     }
@@ -44,12 +51,14 @@ public class StartSequence {
         for (int i = 0; i < LIMIT; i++) {
             Thread.sleep(1000);
             System.out.println(count);
+            wakeUp = true;
             notify();
             wait();
         }
         for (int i = 0; i < LIMIT - 1; i++) {
             Thread.sleep(1000);
             System.out.println(count - 1);
+            wakeUp = true;
             notify();
             wait();
         }
