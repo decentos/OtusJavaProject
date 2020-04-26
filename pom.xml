@@ -29,6 +29,7 @@
         <module>hw11-myCache</module>
         <module>hw12-webApp</module>
         <module>hw13-inversionOfControl</module>
+        <module>hw14-sequence</module>
     </modules>
 
     <properties>
@@ -47,6 +48,7 @@
         <jetty.version>9.4.27.v20200227</jetty.version>
         <spring.version>5.2.3.RELEASE</spring.version>
         <thymeleaf.version>3.0.11.RELEASE</thymeleaf.version>
+        <org.projectlombok.version>1.18.12</org.projectlombok.version>
     </properties>
 
     <dependencyManagement>
@@ -149,6 +151,12 @@
                 <groupId>org.thymeleaf</groupId>
                 <artifactId>thymeleaf-spring5</artifactId>
                 <version>${thymeleaf.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${org.projectlombok.version}</version>
+                <scope>provided</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
