@@ -30,6 +30,7 @@
         <module>hw12-webApp</module>
         <module>hw13-inversionOfControl</module>
         <module>hw14-sequence</module>
+        <module>hw15-messageSystem</module>
     </modules>
 
     <properties>
