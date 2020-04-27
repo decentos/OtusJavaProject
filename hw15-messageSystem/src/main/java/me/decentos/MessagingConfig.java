@@ -1,6 +1,10 @@
 package me.decentos;
 
+import me.decentos.core.handlers.CreateUserRequestHandler;
+import me.decentos.core.handlers.GetUserDataCollectionRequestHandler;
+import me.decentos.core.handlers.GetUserDataRequestHandler;
 import me.decentos.core.service.UserService;
+import me.decentos.messagesystem.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
