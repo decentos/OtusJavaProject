@@ -1,42 +1,66 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title>Страница администратора</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js"></script>
+
     <script>
-        function loadAllUsers() {
-            fetch('api/user/')
-                .then(response => response.json())
-                .then(users => {
-                    let tableBody = usersTable.getElementsByTagName('tbody')[0];
-                    let rows = '';
-                    users.forEach((user, idx) => {
-                        rows += '<tr>' + '<td>' + user.id + '</td>'
-                         + '<td>' + user.name + '</td>'
-                          + '<td>' + user.login + '</td>'
-                          + '<td>' + user.password + '</td>' + '</tr>';
+        const stompClient = Stomp.over(new SockJS('/app/websocket'));
+
+        let loadedUsers = [];
+
+        function subscribes() {
+          stompClient.connect({}, (frame) => {
+            console.log('Connected: ' + frame);
+
+            stompClient.subscribe('/topic/allUsers', (msg) => {
+                loadedUsers = JSON.parse(msg.body);
+                console.log(loadedUsers);
+                showUsers();
+            });
+
+            stompClient.subscribe('/topic/user', (msg) => {
+                const user = JSON.parse(msg.body);
+                console.log(user);
+                if (user) {
+                    const idx = loadedUsers.find((element, index, array) => {
+                        return element.id === user.id;
                     });
-                    tableBody.innerHTML = rows;
-                });
+                    if (idx) {
+                        loadedUsers[idx] = user;
+                    } else {
+                        loadedUsers.push(user);
+                    }
+                    showUsers();
+                }
+            });
+
+            sendLoadAllUsersRequest();
+          });
+        }
+
+        function sendLoadAllUsersRequest() {
+            stompClient.send("/app/getAllUsers", {}, {});
         }
 
         function createNewUser(form) {
-            fetch('api/user/', {
-                  method: 'POST',
-                  headers: {
-                    'Content-Type': 'application/json;charset=utf-8'
-                  },
-                  body: extractUserJson(form)
-                }).then(res => {
-                    if (res.status >= 500) {
-                        alert('Ошибка при создании пользователя');
-                        console.log(res);
-                    } else {
-                        loadAllUsers();
-                    }
-                })
-                  .catch(res => {
-                    alert('Ошибка');
-                    console.log(res)
-                  });
+            const userData = extractUserJson(form);
+            form.reset();
+
+            stompClient.send("/app/createUser", {}, userData);
+        }
+
+        function showUsers() {
+            let tableBody = usersTable.getElementsByTagName('tbody')[0];
+            let rows = '';
+            loadedUsers.forEach((user, idx) => {
+                rows += '<tr>' + '<td>' + user.id + '</td>'
+                 + '<td>' + user.name + '</td>'
+                  + '<td>' + user.login + '</td>'
+                  + '<td>' + user.password + '</td>' + '</tr>';
+            });
+            tableBody.innerHTML = rows;
         }
 
         function extractUserJson(form) {
@@ -55,7 +79,7 @@
     </script>
 </head>
 
-<body>
+<body onload="subscribes();">
 <a href="logout">Выйти</a>
 <br/>
 <h1>Создание нового пользователя:</h1>
@@ -85,7 +109,6 @@
 </form>
 
 <h1>Список всех пользователей:</h1>
-<button onclick="loadAllUsers()" style="margin: 0 0 10px 0;">Загрузить список пользователей</button>
 <table id="usersTable" style="width: 400px; border: solid 1px;">
     <thead>
     <tr>
