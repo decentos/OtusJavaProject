@@ -1,7 +1,12 @@
 package me.decentos.core.handlers;
 
-import com.fasterxml.jackson.databind.ser.Serializers;
+import me.decentos.common.Serializers;
+import me.decentos.core.dto.UserDTO;
+import me.decentos.core.model.User;
 import me.decentos.core.service.UserService;
+import me.decentos.messagesystem.Message;
+import me.decentos.messagesystem.MessageType;
+import me.decentos.messagesystem.RequestHandler;
 
 import java.util.Optional;
 
@@ -19,7 +24,7 @@ public class CreateUserRequestHandler implements RequestHandler {
         User newUser = new User(data.getName());
         newUser.setLogin(data.getLogin());
         newUser.setPassword(data.getPassword());
-        newUser.setIsAdmin(data.getIsAdmin());
+        newUser.setAdmin(data.isAdmin());
 
         long userId = userService.saveUser(newUser);
 

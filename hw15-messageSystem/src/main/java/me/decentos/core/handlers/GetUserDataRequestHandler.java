@@ -4,6 +4,9 @@ import me.decentos.common.Serializers;
 import me.decentos.core.dto.UserDTO;
 import me.decentos.core.model.User;
 import me.decentos.core.service.UserService;
+import me.decentos.messagesystem.Message;
+import me.decentos.messagesystem.MessageType;
+import me.decentos.messagesystem.RequestHandler;
 
 import java.util.Optional;
 
