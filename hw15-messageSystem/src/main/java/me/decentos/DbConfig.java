@@ -7,16 +7,16 @@ import me.decentos.core.service.UserService;
 import me.decentos.hibernate.HibernateUtils;
 import me.decentos.web.startup.AdminUserCreator;
 import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class DbConfig {
-    private static final String HIBERNATE_CFG_XML_FILE_RESOURCE = "/WEB-INF/config/hibernate.cfg.xml";
 
     @Bean
-    public SessionFactory sessionFactory() {
-        return HibernateUtils.buildSessionFactory(HIBERNATE_CFG_XML_FILE_RESOURCE,
+    public SessionFactory sessionFactory(@Value("${hibernateCfgFile}") String configFile) {
+        return HibernateUtils.buildSessionFactory(configFile,
                 User.class, AddressDataSet.class, PhoneDataSet.class);
     }
 
