@@ -2,7 +2,9 @@ package me.decentos.core.dto;
 
 import me.decentos.core.model.User;
 
-public class UserDTO {
+import java.io.Serializable;
+
+public class UserDTO implements Serializable {
     private long id;
     private String name;
     private String login;

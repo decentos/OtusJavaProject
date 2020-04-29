@@ -28,10 +28,7 @@ public class CreateUserRequestHandler implements RequestHandler {
 
         long userId = userService.saveUser(newUser);
 
-        Optional<User> userOptional = userService.getUser(userId);
-        UserDTO result = null;
-        if (userOptional.isPresent())
-            result = new UserDTO(userOptional.get());
+        UserDTO result = userService.getUser(userId).map(UserDTO::new).orElse(null);
 
         return Optional.of(new Message(msg.getTo(), msg.getFrom(), msg.getId(),
                 MessageType.USER_DATA.getValue(), Serializers.serialize(result)));
