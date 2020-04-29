@@ -1,0 +1,126 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Страница администратора</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js"></script>
+
+    <script>
+        const stompClient = Stomp.over(new SockJS('/app/websocket'));
+
+        let loadedUsers = [];
+
+        function subscribes() {
+          stompClient.connect({}, (frame) => {
+            console.log('Connected: ' + frame);
+
+            stompClient.subscribe('/topic/allUsers', (msg) => {
+                loadedUsers = JSON.parse(msg.body);
+                console.log(loadedUsers);
+                showUsers();
+            });
+
+            stompClient.subscribe('/topic/user', (msg) => {
+                const user = JSON.parse(msg.body);
+                console.log(user);
+                if (user) {
+                    const idx = loadedUsers.find((element, index, array) => {
+                        return element.id === user.id;
+                    });
+                    if (idx) {
+                        loadedUsers[idx] = user;
+                    } else {
+                        loadedUsers.push(user);
+                    }
+                    showUsers();
+                }
+            });
+
+            sendLoadAllUsersRequest();
+          });
+        }
+
+        function sendLoadAllUsersRequest() {
+            stompClient.send("/app/getAllUsers", {}, {});
+        }
+
+        function createNewUser(form) {
+            const userData = extractUserJson(form);
+            form.reset();
+
+            stompClient.send("/app/createUser", {}, userData);
+        }
+
+        function showUsers() {
+            let tableBody = usersTable.getElementsByTagName('tbody')[0];
+            let rows = '';
+            loadedUsers.forEach((user, idx) => {
+                rows += '<tr>' + '<td>' + user.id + '</td>'
+                 + '<td>' + user.name + '</td>'
+                  + '<td>' + user.login + '</td>'
+                  + '<td>' + user.password + '</td>' + '</tr>';
+            });
+            tableBody.innerHTML = rows;
+        }
+
+        function extractUserJson(form) {
+            let userObj = objectFromForm(form);
+            userObj['isAdmin'] = userObj['isAdmin'] === 'on' ? true : false;
+            return JSON.stringify(userObj);
+        }
+
+        function objectFromForm(form) {
+            let object = {};
+            let formData = new FormData(form);
+            formData.forEach((value, key) => {object[key] = value});
+
+            return object;
+        }
+    </script>
+</head>
+
+<body onload="subscribes();">
+<a href="logout">Выйти</a>
+<br/>
+<h1>Создание нового пользователя:</h1>
+<form onsubmit="createNewUser(this); return false;" action="#" autocomplete="off">
+    <label>
+        Name <br/>
+        <input type="text" name="name">
+    </label>
+    <br/>
+    <label>
+        Login <br/>
+        <input type="text" name="login">
+    </label>
+    <br/>
+    <label>
+        Password <br/>
+        <input type="password" name="password">
+    </label>
+    <br/>
+    <label>
+        Admin <br/>
+        <input type="checkbox" name="isAdmin">
+    </label>
+    <br/>
+    <br/>
+    <input type="submit" value="Создать">
+</form>
+
+<h1>Список всех пользователей:</h1>
+<table id="usersTable" style="width: 400px; border: solid 1px;">
+    <thead>
+    <tr>
+        <td style="width: 50px">Id</td>
+        <td style="width: 150px">Имя</td>
+        <td style="width: 100px">Логин</td>
+        <td style="width: 100px">Пароль</td>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- content will be changed on button click -->
+    </tbody>
+</table>
+</body>
+</html>
