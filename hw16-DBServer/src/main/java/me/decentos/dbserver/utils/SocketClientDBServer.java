@@ -28,7 +28,7 @@ public class SocketClientDBServer {
 
             oos.writeObject(message);
             logger.info("Message with ID [{}] is send to {} via MessageServer", message.getId(), message.getTo());
-
+            oos.close();
             sleep();
         } catch (Exception ex) {
             logger.error("error", ex);

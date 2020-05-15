@@ -37,8 +37,7 @@ public class FrontendMsClientImpl implements MsClient {
 
     @Override
     public boolean sendMessage(Message msg) {
-        socketClientMS.sendMessage(msg);
-        return true;
+        return socketClientMS.sendMessage(msg);
     }
 
     @Override

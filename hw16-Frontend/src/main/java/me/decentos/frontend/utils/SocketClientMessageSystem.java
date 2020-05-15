@@ -19,7 +19,7 @@ public class SocketClientMessageSystem {
     @Value("${messageServer.host}")
     private String messageServerHost;
 
-    public void sendMessage(Message message) {
+    public boolean sendMessage(Message message) {
         try {
             try (Socket clientSocket = new Socket(messageServerHost, messageServerPort);
                  ObjectOutputStream oos = new ObjectOutputStream(clientSocket.getOutputStream())) {
@@ -30,7 +30,9 @@ public class SocketClientMessageSystem {
             }
         } catch (Exception ex) {
             logger.error("error", ex);
+            return false;
         }
+        return true;
     }
 
     private static void sleep() {
