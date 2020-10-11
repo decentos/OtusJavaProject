@@ -1,5 +1,6 @@
 # Homework №2
 DIY ArrayList
+
 Написать свою реализацию ArrayList на основе массива.
 class DIYarrayList<T> implements List<T>{...}
 
