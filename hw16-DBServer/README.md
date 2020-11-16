@@ -3,9 +3,9 @@
 MessageServer
 
 Cервер из предыдущего ДЗ про MessageSystem разделить на три приложения:
-• MessageServer
-• Frontend
-• DBServer
+- MessageServer
+- Frontend
+- DBServer
 
 Запускать Frontend и DBServer из MessageServer.
 
